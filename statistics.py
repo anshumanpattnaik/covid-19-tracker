@@ -8,10 +8,26 @@ django.setup()
 
 from app.models import CovidStatistics, Country, States
 
-# DATA = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data/data.json')
+# Delete all records
+CovidStatistics.objects.all().delete()
+Country.objects.all().delete()
+States.objects.all().delete()
+
+# Country Data
+country_list = json.load(open('data/country_list.json'))
+
+for data in country_list:
+    country = data['country']
+    code = data['code']
+    flag = data['flag']
+    latitude = data['coordinates'][0]
+    longitude = data['coordinates'][1]
+
+    # Save Country
+    Country.objects.create(country_code=code, name=country, flag=flag, latitude=latitude, longitude=longitude)
+
 data = json.load(open('data/data.json'))
 date = '01-01-2022'
-
 for i in data:
     country = i['Country_Region']
     state = i['Province_State']
@@ -37,10 +53,19 @@ for i in data:
     if len(country) > 1 and len(state) == 0:
         country_statistics = CovidStatistics.objects.create(area=country, address=address, confirmed=confirmed,
                                                             deaths=deaths, recovered=recovered, date=date)
-        country_data = Country.objects.create(name=country, latitude=latitude, longitude=longitude)
-        country_data.statistics.add(country_statistics)
+        try:
+            country_data = Country.objects.get(name=country)
+            country_data.statistics.add(country_statistics)
+        except Country.DoesNotExist:
+            pass
+
     if len(country) > 1 and len(state) > 1:
         state_statistics = CovidStatistics.objects.create(area=state, address=address, confirmed=confirmed,
                                                           deaths=deaths, recovered=recovered, date=date)
-        state_data = States.objects.create(country=country, name=state, latitude=latitude, longitude=longitude)
-        state_data.statistics.add(state_statistics)
+        try:
+            country_data = Country.objects.get(name=country)
+            state_data = States.objects.create(name=state, latitude=latitude, longitude=longitude)
+            state_data.country.add(country_data)
+            state_data.statistics.add(state_statistics)
+        except Country.DoesNotExist:
+            pass

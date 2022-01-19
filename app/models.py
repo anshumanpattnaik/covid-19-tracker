@@ -17,7 +17,7 @@ class CovidStatistics(models.Model):
 class Country(models.Model):
     country_code = models.CharField(max_length=500, blank=True)
     name = models.CharField(max_length=500)
-    flag = models.CharField(max_length=500, blank=True)
+    flag = models.TextField(blank=True)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
     statistics = models.ManyToManyField(CovidStatistics)
@@ -28,7 +28,7 @@ class Country(models.Model):
 
 
 class States(models.Model):
-    country = models.CharField(max_length=500, blank=True)
+    country = models.ManyToManyField(Country)
     name = models.CharField(max_length=500)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
