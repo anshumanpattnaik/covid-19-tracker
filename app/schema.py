@@ -3,7 +3,7 @@ from graphene import relay
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
-from app.models import CovidStatistics, Country
+from app.models import CovidStatistics, Country, States
 
 
 class CovidStatisticsType(DjangoObjectType):
@@ -22,8 +22,19 @@ class CountryType(DjangoObjectType):
         interfaces = (relay.Node,)
 
 
+class StateType(DjangoObjectType):
+    class Meta:
+        model = States
+        fields = ('country', 'name', 'latitude', 'longitude', 'statistics')
+        filter_fields = {
+            'name': ['exact', 'icontains', 'istartswith']
+        }
+        interfaces = (relay.Node,)
+
+
 class Query(graphene.ObjectType):
     statistics = DjangoFilterConnectionField(CountryType)
+    states = DjangoFilterConnectionField(StateType)
 
 
 schema = graphene.Schema(query=Query)

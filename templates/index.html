@@ -3,8 +3,8 @@
 
 {% block content %}
     <div>
-        {% for result in results %}
-            <p> {{ result.area }} | {{ result.confirmed }}</p>
+        {% for statistic in statistics %}
+            <p> {{ statistic.node.name }} | {{ statistic.node.statistics.0.confirmed }}</p>
         {% endfor %}
     </div>
 {% endblock %}

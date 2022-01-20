@@ -1,12 +1,17 @@
 from django.shortcuts import render
 
-from app.core.client.DBClient import DBClient
+from app.core.clients.StatisticClient import StatisticClient
 
 
 def index(request):
-    with DBClient() as db_client:
+
+    with StatisticClient() as statistics_client:
+        query = '{ statistics { edges { node { name flag statistics { area confirmed deaths recovered date } } } } }'
+        payload = {"query": query}
+        response = statistics_client.get_covid_statistics(body=payload).obj()
+        # print(response.data.statistics.edges)
         context = {
-            "results": db_client.fetch_covid_statistics()
+            "statistics": response.data.statistics.edges
         }
     return render(request, 'index.html', context)
 

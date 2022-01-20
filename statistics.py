@@ -50,22 +50,29 @@ for i in data:
     if i['Long_'] != 0 and isinstance(i['Long_'], float):
         longitude = i['Long_']
 
-    if len(country) > 1 and len(state) == 0:
-        country_statistics = CovidStatistics.objects.create(area=country, address=address, confirmed=confirmed,
-                                                            deaths=deaths, recovered=recovered, date=date)
+    if len(country) > 1:
         try:
-            country_data = Country.objects.get(name=country)
-            country_data.statistics.add(country_statistics)
-        except Country.DoesNotExist:
-            pass
+            statistics = CovidStatistics.objects.get(area=country)
+            statistics.confirmed = confirmed
+            statistics.deaths = deaths
+            statistics.recovered = recovered
+            statistics.save()
+        except CovidStatistics.DoesNotExist:
+            country_statistics = CovidStatistics.objects.create(area=country, address=address, confirmed=confirmed,
+                                                                deaths=deaths, recovered=recovered, date=date)
+            try:
+                country_data = Country.objects.get(name=country)
+                country_data.statistics.add(country_statistics)
+            except Country.DoesNotExist:
+                pass
 
-    if len(country) > 1 and len(state) > 1:
-        state_statistics = CovidStatistics.objects.create(area=state, address=address, confirmed=confirmed,
-                                                          deaths=deaths, recovered=recovered, date=date)
-        try:
-            country_data = Country.objects.get(name=country)
-            state_data = States.objects.create(name=state, latitude=latitude, longitude=longitude)
-            state_data.country.add(country_data)
-            state_data.statistics.add(state_statistics)
-        except Country.DoesNotExist:
-            pass
+    # if len(country) > 1 and len(state) > 1:
+    #     state_statistics = CovidStatistics.objects.create(area=state, address=address, confirmed=confirmed,
+    #                                                       deaths=deaths, recovered=recovered, date=date)
+    #     try:
+    #         country_data = Country.objects.get(name=country)
+    #         state_data = States.objects.create(name=state, latitude=latitude, longitude=longitude)
+    #         state_data.country.add(country_data)
+    #         state_data.statistics.add(state_statistics)
+    #     except Country.DoesNotExist:
+    #         pass
