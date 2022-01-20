@@ -1,0 +1,6 @@
+Django==3.2.8
+graphene==2.1.9
+graphene-django==2.15.0
+graphql-core==2.3.2
+graphql-relay==2.0.1
+python-dotenv~=0.19.2

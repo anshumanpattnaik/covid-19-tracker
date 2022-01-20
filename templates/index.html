@@ -2,4 +2,9 @@
 {% load static %}
 
 {% block content %}
+    <div>
+        {% for result in results %}
+            <p> {{ result.area }} | {{ result.confirmed }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}
