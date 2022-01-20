@@ -4,7 +4,7 @@
 {% block content %}
     <div>
         {% for statistic in statistics %}
-            <p> {{ statistic.node.name }} | {{ statistic.node.statistics.0.confirmed }}</p>
+            <p> {{ statistic.name }} | {{ statistic.statistics.0.confirmed }}</p>
         {% endfor %}
     </div>
 {% endblock %}

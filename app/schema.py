@@ -35,9 +35,9 @@ class CountryType(DjangoObjectType):
 class Query(graphene.ObjectType):
     # statistics = DjangoFilterConnectionField(CountryType)
     # states = DjangoFilterConnectionField(StateType)
-    countries = graphene.List(CountryType)
+    statistics = graphene.List(CountryType)
 
-    def resolve_countries(self, info, **kwargs):
+    def resolve_statistics(self, info, **kwargs):
         return Country.objects.all()
 
 

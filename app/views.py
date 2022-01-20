@@ -10,12 +10,12 @@ def index(request):
     #     print(country.name)
 
     with StatisticClient() as statistics_client:
-        query = '{ statistics { edges { node { name flag statistics { area confirmed deaths recovered date } } } } }'
+        query = '{ statistics { name flag latitude longitude statistics { confirmed deaths recovered date } } }'
         payload = {"query": query}
         response = statistics_client.get_covid_statistics(body=payload).obj()
         # print(response.data.statistics.edges)
         context = {
-            "statistics": response.data.statistics.edges
+            "statistics": response.data.statistics
         }
     return render(request, 'index.html', context)
 
