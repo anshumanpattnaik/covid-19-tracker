@@ -52,6 +52,8 @@ for i in data:
 
     if len(country) > 1:
         try:
+            print(f'{country}')
+            print('\n')
             statistics = CovidStatistics.objects.get(area=country)
             statistics.confirmed = confirmed
             statistics.deaths = deaths

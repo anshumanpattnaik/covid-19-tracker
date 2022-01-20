@@ -1,9 +1,13 @@
 from django.shortcuts import render
 
 from app.core.clients.StatisticClient import StatisticClient
+from app.models import CovidStatistics, Country, States
 
 
 def index(request):
+    # countries = Country.objects.all()
+    # for country in countries:
+    #     print(country.name)
 
     with StatisticClient() as statistics_client:
         query = '{ statistics { edges { node { name flag statistics { area confirmed deaths recovered date } } } } }'
