@@ -19,8 +19,45 @@
             <p class="time-period-label">Last Updated:</p>
             <span class="time-period">12 APR 2020</span>
             <div class="total-container">
-
+                <div class="statistics">
+                    <span class="count">1,846,680</span>
+                    <span class="label">CONFIRMED</span>
+                </div>
+                <div class="statistics">
+                    <span class="count">114,090</span>
+                    <span class="label">DEATHS</span>
+                </div>
+                <div class="statistics">
+                    <span class="count">421,722</span>
+                    <span class="label">RECOVERED</span>
+                </div>
             </div>
+            <div class="divider"></div>
+            <div class="search-container">
+                <span class="material-icons">search</span>
+                <input type="text" class="search" placeholder="Search country">
+            </div>
+            {% for statistic in statistics %}
+                <div class="country-list-container">
+                    <div class="country">
+                        <img src="{{ statistic.flag }}" class="flag" alt="">
+                        <span>{{ statistic.name }}</span>
+                    </div>
+                    <div class="statistics">
+                        <span class="count">{{ statistic.statistics.0.confirmed }}</span>
+                        <span class="label">CONFIRMED</span>
+                    </div>
+                    <div class="statistics">
+                        <span class="count">{{ statistic.statistics.0.deaths }}</span>
+                        <span class="label">DEATHS</span>
+                    </div>
+                    <div class="statistics">
+                        <span class="count">{{ statistic.statistics.0.recovered }}</span>
+                        <span class="label">RECOVERED</span>
+                    </div>
+                </div>
+            {% endfor %}
+            <br/>
         </div>
         <div id="map"></div>
         <script src="{% static 'js/map.js' %}"></script>
