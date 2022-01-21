@@ -1,0 +1,84 @@
+@font-face {
+    font-family: RighteousRegular;
+    src: url(../font/Righteous-Regular.ttf);
+}
+@font-face {
+    font-family: SpartanRegular;
+    src: url(../font/Spartan-Regular.ttf);
+}
+@font-face {
+    font-family: SpartanBold;
+    src: url(../font/Spartan-Bold.ttf);
+}
+:root {
+    --black: #000000;
+    --white: #FFFFFF;
+    --f8f9fa: #f8f9fa;
+    --212529: #212529;
+    --3d5a80: #3d5a80;
+    --003566: #003566;
+    --407ba7: #407ba7;
+    --004e89: #004e89;
+    --1a659e: #1a659e;
+}
+html, body {
+    margin: 0;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    background-color: var(--white);
+}
+.root-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+.root-container > .country-container {
+    width: 30vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    background-color: var(--212529);
+}
+.country-container > .title {
+    font-family: SpartanBold, serif;
+    font-size: 1.2em;
+    color: var(--white);
+    margin-top: 1.5em;
+}
+.country-container > .description {
+    font-family: SpartanRegular, serif;
+    font-size: 0.75em;
+    color: var(--white);
+    line-height: 2.2em;
+}
+a {
+    font-family: SpartanBold, serif;
+    font-size: 1em;
+    color: var(--407ba7);
+    text-decoration: none;
+    transition: .3s;
+}
+a:hover {
+    color: var(--004e89);
+    transition: .3s;
+}
+.time-period-label {
+    font-family: SpartanBold, serif;
+    font-size: 0.75em;
+    color: var(--white);
+}
+.time-period {
+    font-family: SpartanBold, serif;
+    font-size: 0.75em;
+    color: var(--407ba7);
+}
+.total-container {
+    height: 8vh;
+    border: 0.5px solid var(--white);
+    border-radius: 0.3em;
+    margin-top: 2em;
+}
+.root-container > #map {
+    width: 100%;
+}

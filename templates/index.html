@@ -2,9 +2,27 @@
 {% load static %}
 
 {% block content %}
-    <div>
-        {% for statistic in statistics %}
-            <p> {{ statistic.name }} | {{ statistic.statistics.0.confirmed }}</p>
-        {% endfor %}
+    <div class="root-container">
+        <div class="country-container">
+            <p class="title">Coronavirus (COVID-19) Tracker</p>
+            <p class="description">
+                Coronavirus (COVID-19) is an infectious disease caused by respiratory illness and symptoms like flu,
+                cough, fever, difficulty breathing. And on <b>December 31, 2019</b>, the first case was recorded in
+                Wuhan, China and later virus got spread around the globe, now almost <b>1,846,680</b> confirmed cases
+                reported since then.
+            </p>
+            <p class="description">
+                To get up to date results this website collects the data from
+                <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank">Johns Hopkins University Center for
+                Systems Science and Engineering (JHU CSSE).</a>
+            </p>
+            <p class="time-period-label">Last Updated:</p>
+            <span class="time-period">12 APR 2020</span>
+            <div class="total-container">
+
+            </div>
+        </div>
+        <div id="map"></div>
+        <script src="{% static 'js/map.js' %}"></script>
     </div>
 {% endblock %}

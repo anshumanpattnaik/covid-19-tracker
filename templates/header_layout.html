@@ -33,12 +33,12 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="{% static 'css/mapbox-gl.css' %}" rel="stylesheet">
+    <script src="{% static 'js/mapbox-gl.js' %}"></script>
 </head>
 <body>
     <div class="wrapper">
-        <header>
-            <div class="nav-container"></div>
-        </header>
         {% block content %}
         {% endblock %}
     </div>
