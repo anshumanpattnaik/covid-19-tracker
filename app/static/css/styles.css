@@ -24,6 +24,7 @@
     --343a40: #343a40;
     --1d1d1d: #1d1d1d;
     --2d3237: #2d3237;
+    --2c3136: #2c3136;
 }
 html, body {
     margin: 0;
@@ -90,9 +91,10 @@ a:hover {
     grid-template-columns: auto auto auto;
     align-items: center;
     border-radius: 0.5em;
-    padding-top: 0.7em;
-    padding-bottom: 0.7em;
+    padding-top: 0.9em;
+    padding-bottom: 0.9em;
     margin-top: 1em;
+    border: 0.5px solid var(--2c3136);
     background-color: var(--1d1d1d);
 }
 .total-container > .statistics {
@@ -109,7 +111,7 @@ a:hover {
 .total-container > .statistics > .label {
     font-family: SpartanBold, serif;
     font-size: 0.65em;
-    color: var(--e63946);
+    color: var(--407ba7);
     margin-top: 1em;
 }
 .country-container > .search-container {
@@ -145,8 +147,14 @@ a:hover {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     border-radius: 0.5em;
-    margin-top: 1em;
+    margin-top: 0.5em;
+    border: 0.5px solid var(--2c3136);
     background-color: var(--1d1d1d);
+    transition: .3s;
+}
+.country-list-container:hover {
+    cursor: pointer;
+    background-color: var(--343a40);
 }
 .country-list-container > .country {
     width: 10em;
@@ -179,7 +187,7 @@ a:hover {
 .country-list-container > .statistics > .label {
     font-family: SpartanBold, serif;
     font-size: 0.55em;
-    color: var(--e63946);
+    color: var(--407ba7);
     margin-top: 1em;
 }
 .root-container > #map {

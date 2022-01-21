@@ -1,5 +1,6 @@
 {% extends 'header_layout.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
     <div class="root-container">
@@ -44,15 +45,15 @@
                         <span>{{ statistic.name }}</span>
                     </div>
                     <div class="statistics">
-                        <span class="count">{{ statistic.statistics.0.confirmed }}</span>
+                        <span class="count">{{ statistic.statistics.0.confirmed|intcomma }}</span>
                         <span class="label">CONFIRMED</span>
                     </div>
                     <div class="statistics">
-                        <span class="count">{{ statistic.statistics.0.deaths }}</span>
+                        <span class="count">{{ statistic.statistics.0.deaths|intcomma }}</span>
                         <span class="label">DEATHS</span>
                     </div>
                     <div class="statistics">
-                        <span class="count">{{ statistic.statistics.0.recovered }}</span>
+                        <span class="count">{{ statistic.statistics.0.recovered|intcomma }}</span>
                         <span class="label">RECOVERED</span>
                     </div>
                 </div>
