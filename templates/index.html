@@ -33,11 +33,13 @@
                     <span class="label">RECOVERED</span>
                 </div>
             </div>
-            <div class="divider"></div>
             <div class="search-container">
                 <span class="material-icons">search</span>
-                <input type="text" class="search" placeholder="Search country">
+                <label>
+                    <input type="text" class="search" placeholder="Search country">
+                </label>
             </div>
+            {#<div class="divider">&nbsp;</div>#}
             {% for statistic in statistics %}
                 <div class="country-list-container">
                     <div class="country">
