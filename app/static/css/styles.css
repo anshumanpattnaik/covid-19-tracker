@@ -26,6 +26,19 @@
     --2d3237: #2d3237;
     --2c3136: #2c3136;
 }
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--1d1d1d);
+}
+::-webkit-scrollbar-thumb {
+    transition: .3s;
+    background: var(--3d5a80);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--1a659e);
+}
 html, body {
     margin: 0;
     overflow: hidden;
