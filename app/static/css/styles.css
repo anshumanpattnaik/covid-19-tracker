@@ -1,14 +1,14 @@
 @font-face {
     font-family: RighteousRegular;
-    src: url(../font/Righteous-Regular.ttf);
+    src: url(../fonts/Righteous-Regular.ttf);
 }
 @font-face {
     font-family: SpartanRegular;
-    src: url(../font/Spartan-Regular.ttf);
+    src: url(../fonts/Spartan-Regular.ttf);
 }
 @font-face {
     font-family: SpartanBold;
-    src: url(../font/Spartan-Bold.ttf);
+    src: url(../fonts/Spartan-Bold.ttf);
 }
 :root {
     --black: #000000;
@@ -146,7 +146,7 @@ a:hover {
     margin-left: 1em;
 }
 .country-container > .search-container > label > .search {
-    width: 85%;
+    width: 19vw;
     height: 2em;
     font-family: SpartanBold, serif;
     font-size: 0.8em;
@@ -154,7 +154,7 @@ a:hover {
     text-indent: 0.8em;
     outline: none;
     border: none;
-    background: none;
+    background-color: transparent;
 }
 .country-list-container {
     display: grid;
