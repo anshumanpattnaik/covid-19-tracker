@@ -13,7 +13,7 @@ from app.models import CovidStatistics, Country, States
 # Country Data
 country_list = json.load(open('data/country_list.json'))
 
-data = json.load(open('data/data.json'))
+data = json.load(open('data/2022-01-01.json'))
 date = date(2022, 1, 1)
 
 # CovidStatistics.objects.all().delete()

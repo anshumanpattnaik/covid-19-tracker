@@ -14,7 +14,8 @@ def index(request):
         payload = {"query": query}
         response = statistics_client.get_covid_statistics(body=payload).obj()
         context = {
-            "statistics": response.data.statistics
+            "statistics": response.data.statistics,
+            "date": date
         }
     return render(request, 'index.html', context)
 
