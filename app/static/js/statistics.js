@@ -1,24 +1,28 @@
 let statisticsContainer = document.querySelector(".statistics-container");
 let searchInput = document.getElementById("input");
-searchInput.addEventListener('input', filter_autoComplete);
-
 let headerTotalConfirmed = document.getElementById("header-total-confirmed");
 let totalConfirmed = document.getElementById("total-confirmed");
 let totalDeaths = document.getElementById("total-deaths");
 let totalRecovered = document.getElementById("total-recovered");
 
-list_country();
-function list_country() {
-    statistics.sort((a, b) => a.statistics[0].confirmed === b.statistics[0].confirmed ? 0 : a.statistics[0].confirmed < b.statistics[0].confirmed || -1);
+renderStatistics();
 
+/**
+ * This function renders all countries statistics
+ */
+function renderStatistics() {
     let totalConfirmedCase = 0;
     let totalDeathsCase = 0;
     let totalRecoveredCase = 0;
+
+    // Sorting statistics from higher confirmed cases to lower confirmed cases
+    statistics.sort((a, b) => a.statistics[0].confirmed === b.statistics[0].confirmed ? 0 : a.statistics[0].confirmed < b.statistics[0].confirmed || -1);
+
     statistics.forEach(data => {
         totalConfirmedCase +=data.statistics[0].confirmed;
         totalDeathsCase +=data.statistics[0].deaths;
         totalRecoveredCase +=data.statistics[0].recovered;
-        addCountry(data);
+        addCountryStatistics(data);
     });
     headerTotalConfirmed.innerText = totalConfirmedCase.toLocaleString();
     totalConfirmed.innerText = totalConfirmedCase.toLocaleString();
@@ -26,27 +30,35 @@ function list_country() {
     totalRecovered.innerText = totalRecoveredCase.toLocaleString();
 }
 
-function filter_autoComplete({target}) {
+searchInput.addEventListener('input', function (e) {
+    // clear list
     statisticsContainer.innerHTML = ``;
 
-    let data = target.value;
+    let data = e.target.value;
     if (data.length) {
-        let filteredValues = autoComplete(data);
-        filteredValues.forEach(value => {
-            addCountry(value);
-        });
+        let filteredValues = filterStatistics(data);
+        filteredValues.forEach(value => addCountryStatistics(value));
     } else {
-        list_country();
+        renderStatistics();
     }
-}
+});
 
-function autoComplete(value) {
+/**
+ * This function filters covid statistics by country name.
+ * @param name is country name
+ * @returns filtered statistics list.
+ */
+function filterStatistics(name) {
     return statistics.filter(data =>
-        data.name.toLowerCase().includes(value.toLowerCase())
+        data.name.toLowerCase().includes(name.toLowerCase())
     )
 }
 
-function addCountry(data) {
+/**
+ * This function adds list of countries with the statistics to the parent container.
+ * @param data contains country list with the covid statistics
+ */
+function addCountryStatistics(data) {
     let countryListContainer = document.createElement("div");
     countryListContainer.setAttribute("class", "country-list-container");
 
