@@ -91,8 +91,9 @@ a:hover {
 }
 .time-period {
     font-family: SpartanBold, serif;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     color: var(--407ba7);
+    margin-left: 0.5em;
 }
 .total-container {
     display: grid;

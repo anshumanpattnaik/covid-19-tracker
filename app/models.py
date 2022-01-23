@@ -7,11 +7,22 @@ class CovidStatistics(models.Model):
     confirmed = models.IntegerField(default=0)
     deaths = models.IntegerField(default=0)
     recovered = models.IntegerField(default=0)
-    date = models.CharField(max_length=500, blank=True)
+    date = models.DateField(blank=True)
 
     class Meta:
         managed = True
         db_table = 'covid_statistics'
+
+
+class TotalCases(models.Model):
+    total_confirmed = models.IntegerField(default=0)
+    total_deaths = models.IntegerField(default=0)
+    total_recovered = models.IntegerField(default=0)
+    date = models.DateField(blank=True)
+
+    class Meta:
+        managed = True
+        db_table = 'total_covid_cases'
 
 
 class Country(models.Model):
@@ -32,6 +43,7 @@ class States(models.Model):
     name = models.CharField(max_length=500)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
+    date = models.DateField(blank=True)
     statistics = models.ManyToManyField(CovidStatistics)
 
     class Meta:

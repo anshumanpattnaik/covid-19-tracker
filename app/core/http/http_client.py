@@ -18,5 +18,6 @@ class HTTPClient:
     def send_request(method, url, payload=None, cls=None):
         session = requests.Session()
         if method == 'post':
-            return Response(session.request(method, url, json=payload), cls)
+            response = session.request(method, url, json=payload)
+            return Response(response, cls)
         return Response(session.request(method, url), cls)

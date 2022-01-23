@@ -8,4 +8,4 @@ class StatisticClient(HTTPClient):
         super().__init__()
 
     def get_covid_statistics(self, body) -> Response[StatisticsData]:
-        return self.send_request(method='post', url=f'{self.url}/graphql/', payload=body, cls=StatisticsData)
+        return self.send_request(method='post', url=f'{self.url}/graphql', payload=body, cls=StatisticsData)

@@ -11,21 +11,31 @@ class Statistics(JSONEntity):
         self.date = date
 
 
+class StatisticsNode(JSONEntity):
+    def __init__(self, node: Statistics = None):
+        self.node = Statistics.object(node)
+
+
+class StatisticsEdges(JSONEntity):
+    def __init__(self, edges: [StatisticsNode] = None):
+        self.edges = StatisticsNode.object(edges)
+
+
 class Country(JSONEntity):
     def __init__(self, name: str = None, flag: str = None, latitude: float = None, longitude: float = None,
-                 statistics: [Statistics] = None):
+                 statistics: StatisticsEdges = None):
         self.name = name
         self.flag = flag
         self.latitude = latitude
         self.longitude = longitude
-        self.statistics = Statistics.object(statistics)
+        self.statistics = StatisticsEdges.object(statistics)
 
 
-class StatisticsNode(JSONEntity):
+class CountryStatistics(JSONEntity):
     def __init__(self, statistics: [Country] = None):
         self.statistics = Country.object(statistics)
 
 
 class StatisticsData(JSONEntity):
-    def __init__(self, data: StatisticsNode = None):
-        self.data = StatisticsNode.object(data)
+    def __init__(self, data: CountryStatistics = None):
+        self.data = CountryStatistics.object(data)

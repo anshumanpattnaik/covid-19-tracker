@@ -16,13 +16,17 @@ function renderStatistics() {
     let totalRecoveredCase = 0;
 
     // Sorting statistics from higher confirmed cases to lower confirmed cases
-    statistics.sort((a, b) => a.statistics[0].confirmed === b.statistics[0].confirmed ? 0 : a.statistics[0].confirmed < b.statistics[0].confirmed || -1);
+    if(statistics[0].statistics.edges.length >= 1) {
+        statistics.sort((a, b) => a.statistics.edges[0].node.confirmed === b.statistics.edges[0].node.confirmed ? 0 : a.statistics.edges[0].node.confirmed < b.statistics.edges[0].node.confirmed || -1);
+    }
 
     statistics.forEach(data => {
-        totalConfirmedCase +=data.statistics[0].confirmed;
-        totalDeathsCase +=data.statistics[0].deaths;
-        totalRecoveredCase +=data.statistics[0].recovered;
-        addCountryStatistics(data);
+        if(data.statistics.edges.length >= 1) {
+            totalConfirmedCase +=data.statistics.edges[0].node.confirmed;
+            totalDeathsCase +=data.statistics.edges[0].node.deaths;
+            totalRecoveredCase +=data.statistics.edges[0].node.recovered;
+            addCountryStatistics(data);
+        }
     });
     headerTotalConfirmed.innerText = totalConfirmedCase.toLocaleString();
     totalConfirmed.innerText = totalConfirmedCase.toLocaleString();
@@ -82,7 +86,7 @@ function addCountryStatistics(data) {
 
     let confirmedCount = document.createElement("span");
     confirmedCount.setAttribute("class", "count");
-    confirmedCount.innerText = data.statistics[0].confirmed.toLocaleString();
+    confirmedCount.innerText = data.statistics.edges[0].node.confirmed.toLocaleString();
 
     let confirmedLabel = document.createElement("span");
     confirmedLabel.setAttribute("class", "label");
@@ -97,7 +101,7 @@ function addCountryStatistics(data) {
 
     let deathsCount = document.createElement("span");
     deathsCount.setAttribute("class", "count");
-    deathsCount.innerText = data.statistics[0].deaths.toLocaleString();
+    deathsCount.innerText = data.statistics.edges[0].node.deaths.toLocaleString();
 
     let deathsLabel = document.createElement("span");
     deathsLabel.setAttribute("class", "label");
@@ -112,7 +116,7 @@ function addCountryStatistics(data) {
 
     let recoveredCount = document.createElement("span");
     recoveredCount.setAttribute("class", "count");
-    recoveredCount.innerText = data.statistics[0].recovered.toLocaleString();
+    recoveredCount.innerText = data.statistics.edges[0].node.recovered.toLocaleString();
 
     let recoveredLabel = document.createElement("span");
     recoveredLabel.setAttribute("class", "label");

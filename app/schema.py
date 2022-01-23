@@ -10,6 +10,10 @@ class CovidStatisticsType(DjangoObjectType):
     class Meta:
         model = CovidStatistics
         fields = ('area', 'address', 'confirmed', 'deaths', 'recovered', 'date')
+        filter_fields = {
+            'date': ['exact', 'icontains', 'istartswith']
+        }
+        interfaces = (relay.Node,)
 
 
 class CountryType(DjangoObjectType):
@@ -17,7 +21,7 @@ class CountryType(DjangoObjectType):
         model = Country
         fields = ('country_code', 'name', 'flag', 'latitude', 'longitude', 'statistics')
         # filter_fields = {
-        #     'country_code': ['exact', 'icontains', 'istartswith']
+        #     'date': ['exact', 'icontains', 'istartswith']
         # }
         # interfaces = (relay.Node,)
 
@@ -39,6 +43,22 @@ class Query(graphene.ObjectType):
 
     def resolve_statistics(self, info, **kwargs):
         return Country.objects.all()
+
+
+class GetStatisticsByCountry(graphene.Mutation):
+    class Arguments:
+        date = graphene.String(required=True)
+
+    statistics = graphene.Field(CovidStatisticsType)
+
+    @classmethod
+    def mutate(cls, root, info, date):
+        statistics = CovidStatistics.objects.filter(date=date)
+        return GetStatisticsByCountry(statistics)
+
+
+class Mutation(graphene.ObjectType):
+    statistics_category = GetStatisticsByCountry.Field()
 
 
 schema = graphene.Schema(query=Query)
