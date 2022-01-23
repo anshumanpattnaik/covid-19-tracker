@@ -2,12 +2,28 @@ let statisticsContainer = document.querySelector(".statistics-container");
 let searchInput = document.getElementById("input");
 searchInput.addEventListener('input', filter_autoComplete);
 
+let headerTotalConfirmed = document.getElementById("header-total-confirmed");
+let totalConfirmed = document.getElementById("total-confirmed");
+let totalDeaths = document.getElementById("total-deaths");
+let totalRecovered = document.getElementById("total-recovered");
+
 list_country();
 function list_country() {
-    // statistics.sort((a, b) => parseFloat(a.statistics[0].confirmed) - parseFloat(b.statistics[0].confirmed));
+    statistics.sort((a, b) => a.statistics[0].confirmed === b.statistics[0].confirmed ? 0 : a.statistics[0].confirmed < b.statistics[0].confirmed || -1);
+
+    let totalConfirmedCase = 0;
+    let totalDeathsCase = 0;
+    let totalRecoveredCase = 0;
     statistics.forEach(data => {
-        add_country(data);
+        totalConfirmedCase +=data.statistics[0].confirmed;
+        totalDeathsCase +=data.statistics[0].deaths;
+        totalRecoveredCase +=data.statistics[0].recovered;
+        addCountry(data);
     });
+    headerTotalConfirmed.innerText = totalConfirmedCase.toLocaleString();
+    totalConfirmed.innerText = totalConfirmedCase.toLocaleString();
+    totalDeaths.innerText = totalDeathsCase.toLocaleString();
+    totalRecovered.innerText = totalRecoveredCase.toLocaleString();
 }
 
 function filter_autoComplete({target}) {
@@ -17,7 +33,7 @@ function filter_autoComplete({target}) {
     if (data.length) {
         let filteredValues = autoComplete(data);
         filteredValues.forEach(value => {
-            add_country(value);
+            addCountry(value);
         });
     } else {
         list_country();
@@ -30,7 +46,7 @@ function autoComplete(value) {
     )
 }
 
-function add_country(data) {
+function addCountry(data) {
     let countryListContainer = document.createElement("div");
     countryListContainer.setAttribute("class", "country-list-container");
 
@@ -54,7 +70,7 @@ function add_country(data) {
 
     let confirmedCount = document.createElement("span");
     confirmedCount.setAttribute("class", "count");
-    confirmedCount.innerText = data.statistics[0].confirmed;
+    confirmedCount.innerText = data.statistics[0].confirmed.toLocaleString();
 
     let confirmedLabel = document.createElement("span");
     confirmedLabel.setAttribute("class", "label");
@@ -69,7 +85,7 @@ function add_country(data) {
 
     let deathsCount = document.createElement("span");
     deathsCount.setAttribute("class", "count");
-    deathsCount.innerText = data.statistics[0].deaths;
+    deathsCount.innerText = data.statistics[0].deaths.toLocaleString();
 
     let deathsLabel = document.createElement("span");
     deathsLabel.setAttribute("class", "label");
@@ -84,7 +100,7 @@ function add_country(data) {
 
     let recoveredCount = document.createElement("span");
     recoveredCount.setAttribute("class", "count");
-    recoveredCount.innerText = data.statistics[0].recovered;
+    recoveredCount.innerText = data.statistics[0].recovered.toLocaleString();
 
     let recoveredLabel = document.createElement("span");
     recoveredLabel.setAttribute("class", "label");
