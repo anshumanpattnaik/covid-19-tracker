@@ -1,4 +1,25 @@
+from typing import List
+
 from app.core.JSONEntity import JSONEntity
+
+
+class TotalCasesField(JSONEntity):
+    def __init__(self, totalConfirmed: int = None, totalDeaths: int = None, totalRecovered: int = None,
+                 date: str = None):
+        self.totalConfirmed = totalConfirmed
+        self.totalDeaths = totalDeaths
+        self.totalRecovered = totalRecovered
+        self.date = date
+
+
+class TotalCasesNode(JSONEntity):
+    def __init__(self, node: TotalCasesField = None):
+        self.node = TotalCasesField.object(node)
+
+
+class TotalCasesEdges(JSONEntity):
+    def __init__(self, edges: [TotalCasesNode] = None):
+        self.edges = TotalCasesNode.object(edges)
 
 
 class Statistics(JSONEntity):
@@ -22,17 +43,17 @@ class StatisticsEdges(JSONEntity):
 
 
 class Country(JSONEntity):
-    def __init__(self, name: str = None, flag: str = None, latitude: float = None, longitude: float = None,
+    def __init__(self, name: str = None, flag: str = None, coordinates: List = None,
                  statistics: StatisticsEdges = None):
         self.name = name
         self.flag = flag
-        self.latitude = latitude
-        self.longitude = longitude
+        self.coordinates = coordinates
         self.statistics = StatisticsEdges.object(statistics)
 
 
 class CountryStatistics(JSONEntity):
-    def __init__(self, statistics: [Country] = None):
+    def __init__(self, totalCases: TotalCasesEdges = None, statistics: [Country] = None):
+        self.totalCases = TotalCasesEdges.object(totalCases)
         self.statistics = Country.object(statistics)
 
 

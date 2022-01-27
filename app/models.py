@@ -1,13 +1,13 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 
 class CovidStatistics(models.Model):
     area = models.CharField(max_length=500, blank=True)
-    address = models.CharField(max_length=500, blank=True)
     confirmed = models.IntegerField(default=0)
     deaths = models.IntegerField(default=0)
     recovered = models.IntegerField(default=0)
-    date = models.DateField(blank=True)
+    date = models.CharField(max_length=100, blank=True)
 
     class Meta:
         managed = True
@@ -18,7 +18,7 @@ class TotalCases(models.Model):
     total_confirmed = models.IntegerField(default=0)
     total_deaths = models.IntegerField(default=0)
     total_recovered = models.IntegerField(default=0)
-    date = models.DateField(blank=True)
+    date = models.CharField(max_length=100, blank=True)
 
     class Meta:
         managed = True
@@ -26,11 +26,10 @@ class TotalCases(models.Model):
 
 
 class Country(models.Model):
-    country_code = models.CharField(max_length=500, blank=True)
-    name = models.CharField(max_length=500)
-    flag = models.TextField(blank=True)
-    latitude = models.FloatField(default=0)
-    longitude = models.FloatField(default=0)
+    name = models.CharField(max_length=500, unique=True)
+    code = models.CharField(max_length=500)
+    flag = models.TextField(unique=True)
+    coordinates = ArrayField(base_field=models.FloatField(), default=list)
     statistics = models.ManyToManyField(CovidStatistics)
 
     class Meta:
@@ -41,9 +40,8 @@ class Country(models.Model):
 class States(models.Model):
     country = models.ManyToManyField(Country)
     name = models.CharField(max_length=500)
-    latitude = models.FloatField(default=0)
-    longitude = models.FloatField(default=0)
-    date = models.DateField(blank=True)
+    coordinate = ArrayField(base_field=models.FloatField(), default=list)
+    date = models.CharField(max_length=100, blank=True)
     statistics = models.ManyToManyField(CovidStatistics)
 
     class Meta:

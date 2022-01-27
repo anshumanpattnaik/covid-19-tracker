@@ -43,6 +43,7 @@
         </div>
         <div id="map"></div>
         <script>
+            let totalCases = {{ total_cases|safe }};
             let statistics = {{ statistics|safe }};
         </script>
         <script src="{% static 'js/statistics.js' %}"></script>

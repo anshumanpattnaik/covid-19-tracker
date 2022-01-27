@@ -11,9 +11,6 @@ renderStatistics();
  * This function renders all countries statistics
  */
 function renderStatistics() {
-    let totalConfirmedCase = 0;
-    let totalDeathsCase = 0;
-    let totalRecoveredCase = 0;
 
     // Sorting statistics from higher confirmed cases to lower confirmed cases
     if(statistics[0].statistics.edges.length >= 1) {
@@ -22,16 +19,13 @@ function renderStatistics() {
 
     statistics.forEach(data => {
         if(data.statistics.edges.length >= 1) {
-            totalConfirmedCase +=data.statistics.edges[0].node.confirmed;
-            totalDeathsCase +=data.statistics.edges[0].node.deaths;
-            totalRecoveredCase +=data.statistics.edges[0].node.recovered;
             addCountryStatistics(data);
         }
     });
-    headerTotalConfirmed.innerText = totalConfirmedCase.toLocaleString();
-    totalConfirmed.innerText = totalConfirmedCase.toLocaleString();
-    totalDeaths.innerText = totalDeathsCase.toLocaleString();
-    totalRecovered.innerText = totalRecoveredCase.toLocaleString();
+    headerTotalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
+    totalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
+    totalDeaths.innerText = totalCases.totalDeaths.toLocaleString();
+    totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
 }
 
 searchInput.addEventListener('input', function (e) {
