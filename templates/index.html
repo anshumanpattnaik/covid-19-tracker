@@ -45,6 +45,21 @@
         <script>
             let totalCases = {{ total_cases|safe }};
             let statistics = {{ statistics|safe }};
+
+            /*fetch('http://192.168.29.113:8000/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "date": "01-26-2022"
+                })
+            }).then(resp => {
+                console.log(resp)
+            }).catch(err => {
+               console.log(err)
+            })*/
         </script>
         <script src="{% static 'js/statistics.js' %}"></script>
         <script src="{% static 'js/map.js' %}"></script>

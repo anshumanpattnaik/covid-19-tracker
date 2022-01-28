@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'graphene_django',
     'django_filters',
+    'corsheaders',
     'app',
 ]
 
@@ -50,6 +51,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'covid19.urls'
+CORS_ORIGIN_WHITELIST = ('http://192.168.29.113:8000',)
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {

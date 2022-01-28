@@ -7,6 +7,5 @@ from .views import *
 
 urlpatterns = [
     re_path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
-    path('', index),
-    path('csv', parse_csv),
+    path('', index)
 ]
