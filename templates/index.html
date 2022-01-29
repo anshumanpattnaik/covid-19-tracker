@@ -17,7 +17,14 @@
                 <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank">Johns Hopkins University Center for
                 Systems Science and Engineering (JHU CSSE).</a>
             </p>
-            <p class="time-period-label">Last Updated: <span class="time-period">{{ date }}</span></p>
+            <div class="timeline">
+                <span class="label">Timeline: </span>
+                <select>
+                    {% for date in all_dates %}
+                        <option>{{ date }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             <div class="total-container">
                 <div class="statistics">
                     <span class="count" id="total-confirmed">0</span>
