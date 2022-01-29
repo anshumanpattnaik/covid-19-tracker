@@ -11,7 +11,6 @@ def index(request):
         query = Utils.graphql_query(date=date)
         payload = {"query": query}
         response = statistics_client.get_covid_statistics(body=payload).obj()
-
         total_cases = TotalCases.objects.all()
         dates = []
         for total in total_cases:
@@ -21,6 +20,6 @@ def index(request):
             "statistics": response.data.statistics,
             "date": date,
             "all_dates": dates,
-            "graphql_query": query
+            "graphql_query": payload
         }
     return render(request, 'index.html', context)

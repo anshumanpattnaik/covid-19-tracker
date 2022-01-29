@@ -19,7 +19,7 @@
             </p>
             <div class="timeline">
                 <span class="label">Timeline: </span>
-                <select>
+                <select id="date-selector">
                     {% for date in all_dates %}
                         <option>{{ date }}</option>
                     {% endfor %}
@@ -57,20 +57,27 @@
         <script src="{% static 'js/map.js' %}"></script>
         <script>
             let graphqlQuery = {{ graphql_query|safe }};
-            fetch('http://192.168.29.113:8000/graphql', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "query": graphqlQuery
+            let dateSelector = document.getElementById("date-selector");
+            dateSelector.addEventListener("change", function() {
+                let query = JSON.stringify(graphqlQuery);
+                let date = query.match(/\d{2}([\/.-])\d{2}\1\d{4}/g);
+                query = query.replaceAll(date[0], dateSelector.value)
+                // alert(query);
+                fetch('http://192.168.29.113:8000/graphql', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: query
+                }).then(res => res.json())
+                  .then(res => {
+                      // console.log(JSON.stringify(res));
+                      renderStatistics(res.data.totalCases.edges[0].node, res.data.statistics)
+                }).catch(err => {
+                   console.log(err)
                 })
-            }).then(resp => {
-                console.log(resp)
-            }).catch(err => {
-               console.log(err)
-            })
+            });
         </script>
     </div>
 {% endblock %}

@@ -5,27 +5,29 @@ let totalConfirmed = document.getElementById("total-confirmed");
 let totalDeaths = document.getElementById("total-deaths");
 let totalRecovered = document.getElementById("total-recovered");
 
-renderStatistics();
+renderStatistics(totalCases, statistics);
 
 /**
  * This function renders all countries statistics
  */
-function renderStatistics() {
+function renderStatistics(totalCases, statistics) {
+    statisticsContainer.innerHTML = ``;
 
-    // Sorting statistics from higher confirmed cases to lower confirmed cases
-    if(statistics[0].statistics.edges.length >= 1) {
-        statistics.sort((a, b) => a.statistics.edges[0].node.confirmed === b.statistics.edges[0].node.confirmed ? 0 : a.statistics.edges[0].node.confirmed < b.statistics.edges[0].node.confirmed || -1);
-    }
-
-    statistics.forEach(data => {
-        if(data.statistics.edges.length >= 1) {
-            addCountryStatistics(data);
+    if(totalCases !== undefined && statistics !== undefined) {
+        // Sorting statistics from higher confirmed cases to lower confirmed cases
+        if(statistics[0].statistics.edges.length >= 1) {
+            statistics.sort((a, b) => a.statistics.edges[0].node.confirmed === b.statistics.edges[0].node.confirmed ? 0 : a.statistics.edges[0].node.confirmed < b.statistics.edges[0].node.confirmed || -1);
         }
-    });
-    headerTotalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
-    totalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
-    totalDeaths.innerText = totalCases.totalDeaths.toLocaleString();
-    totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
+        statistics.forEach(data => {
+            if(data.statistics.edges.length >= 1) {
+                addCountryStatistics(data);
+            }
+        });
+        headerTotalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
+        totalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
+        totalDeaths.innerText = totalCases.totalDeaths.toLocaleString();
+        totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
+    }
 }
 
 searchInput.addEventListener('input', function (e) {
@@ -37,7 +39,7 @@ searchInput.addEventListener('input', function (e) {
         let filteredValues = filterStatistics(data);
         filteredValues.forEach(value => addCountryStatistics(value));
     } else {
-        renderStatistics();
+        renderStatistics(totalCases, statistics);
     }
 });
 
