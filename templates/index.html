@@ -62,8 +62,7 @@
                 let query = JSON.stringify(graphqlQuery);
                 let date = query.match(/\d{2}([\/.-])\d{2}\1\d{4}/g);
                 query = query.replaceAll(date[0], dateSelector.value)
-                // alert(query);
-                fetch('http://192.168.29.113:8000/graphql', {
+                fetch('/graphql', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -72,7 +71,6 @@
                     body: query
                 }).then(res => res.json())
                   .then(res => {
-                      // console.log(JSON.stringify(res));
                       renderStatistics(res.data.totalCases.edges[0].node, res.data.statistics)
                 }).catch(err => {
                    console.log(err)

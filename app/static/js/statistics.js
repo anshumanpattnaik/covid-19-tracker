@@ -68,7 +68,6 @@ function addCountryStatistics(data) {
     let flag = document.createElement("img");
     flag.setAttribute("class", "flag");
     flag.src = data.flag;
-    flag.loading = "lazy";
 
     let countryName = document.createElement("span");
     countryName.innerText = data.name;
