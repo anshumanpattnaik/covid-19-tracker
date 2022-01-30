@@ -51,15 +51,19 @@ html, body {
     height: 100vh;
     display: flex;
 }
-.root-container > .country-container {
-    width: 30vw;
+.country-container {
+    width: 28em;
     height: auto;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom:0;
+    z-index: 999;
     padding-top: 1em;
     padding-left: 1em;
     padding-right: 1em;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
     background-color: var(--212529);
 }
 .country-container > .title {
@@ -166,7 +170,7 @@ a:hover {
     margin-left: 1em;
 }
 .country-container > .search-container > label > .search {
-    width: 19vw;
+    width: 25em;
     height: 2em;
     font-family: SpartanBold, serif;
     font-size: 0.8em;
@@ -228,4 +232,14 @@ a:hover {
 }
 .root-container > #map {
     width: 100%;
+}
+@media only screen and (max-width: 950px) {
+    .country-container {
+        width: 95vw;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+    .country-list-container > .country {
+        width: 5em;
+    }
 }
