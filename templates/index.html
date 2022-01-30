@@ -72,6 +72,7 @@
                 }).then(res => res.json())
                   .then(res => {
                       renderStatistics(res.data.totalCases.edges[0].node, res.data.statistics)
+                      loadMap();
                 }).catch(err => {
                    console.log(err)
                 })
