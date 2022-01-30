@@ -18,8 +18,18 @@ map.on("load", function() {
       id: MAP_ID,
       type: "circle",
       source: MAP_ID,
+      opacity: 10,
       paint: {
-        "circle-radius": 25,
+        "circle-radius": {
+          "property": "confirmed",
+          "stops": [
+            [0, 0],
+            [100, 1],
+            [10000, 10],
+            [100000, 20],
+            [10000000, 30]
+          ]
+        },
         "circle-color": "#e63946",
         "circle-stroke-color": "#e63946",
         "circle-stroke-width": 2
@@ -36,14 +46,15 @@ map.on("mouseenter", MAP_ID, function(e) {
   map.getCanvas().style.cursor = "pointer";
 
   let coordinates = e.features[0].geometry.coordinates.slice();
-  // let description = e.features[0].properties.description;
+  let name = e.features[0].properties.name;
+  let confirmed = e.features[0].properties.confirmed;
 
   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
   }
   popup
     .setLngLat(coordinates)
-    .setHTML("Test")
+    .setHTML(name)
     .addTo(map);
 });
 

@@ -27,8 +27,14 @@ function renderStatistics(totalCases, statistics) {
                     geometry: {
                         type: "Point",
                         coordinates: data.coordinates
+                    },
+                    properties: {
+                        name: `<strong>Country</strong><p>${data.name}</p>`,
+                        confirmed: data.statistics.edges[0].node.confirmed,
+                        deaths: data.statistics.edges[0].node.deaths,
+                        recovered: data.statistics.edges[0].node.recovered
                     }
-                })
+                });
                 addCountryStatistics(data);
             }
         });
