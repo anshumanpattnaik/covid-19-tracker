@@ -61,7 +61,7 @@
             dateSelector.addEventListener("change", function() {
                 let query = JSON.stringify(graphqlQuery);
                 let date = query.match(/\d{2}([\/.-])\d{2}\1\d{4}/g);
-                query = query.replaceAll(date[0], dateSelector.value)
+                query = query.replaceAll(date[0], dateSelector.value);
                 fetch('/graphql', {
                     method: 'POST',
                     headers: {

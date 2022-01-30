@@ -232,6 +232,7 @@ a:hover {
 }
 .root-container > #map {
     width: 100%;
+    margin-left: 40em;
 }
 @media only screen and (max-width: 950px) {
     .country-container {
@@ -241,5 +242,9 @@ a:hover {
     }
     .country-list-container > .country {
         width: 5em;
+    }
+    .root-container > #map {
+        width: 100%;
+        margin-left: 0;
     }
 }

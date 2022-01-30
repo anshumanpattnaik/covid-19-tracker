@@ -5,6 +5,7 @@ let totalConfirmed = document.getElementById("total-confirmed");
 let totalDeaths = document.getElementById("total-deaths");
 let totalRecovered = document.getElementById("total-recovered");
 
+let geoJSON = {}
 renderStatistics(totalCases, statistics);
 
 /**
@@ -18,11 +19,24 @@ function renderStatistics(totalCases, statistics) {
         if(statistics[0].statistics.edges.length >= 1) {
             statistics.sort((a, b) => a.statistics.edges[0].node.confirmed === b.statistics.edges[0].node.confirmed ? 0 : a.statistics.edges[0].node.confirmed < b.statistics.edges[0].node.confirmed || -1);
         }
+        let featuresData = []
         statistics.forEach(data => {
             if(data.statistics.edges.length >= 1) {
+                featuresData.push({
+                    type: "Feature",
+                    geometry: {
+                        type: "Point",
+                        coordinates: data.coordinates
+                    }
+                })
                 addCountryStatistics(data);
             }
         });
+        geoJSON = {
+            type: "FeatureCollection",
+            features: featuresData
+        }
+        // console.log(JSON.stringify(geoJSON));
         headerTotalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
         totalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
         totalDeaths.innerText = totalCases.totalDeaths.toLocaleString();

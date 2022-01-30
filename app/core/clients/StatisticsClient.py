@@ -3,7 +3,7 @@ from app.core.http.response import Response
 from app.core.objects.statistics import StatisticsData
 
 
-class StatisticClient(HTTPClient):
+class StatisticsClient(HTTPClient):
     def __init__(self):
         super().__init__()
 

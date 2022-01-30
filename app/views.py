@@ -1,12 +1,12 @@
 from django.shortcuts import render
 
-from app.core.clients.StatisticClient import StatisticClient
+from app.core.clients.StatisticsClient import StatisticsClient
 from app.core.utils import Utils
 from app.models import DateConfig, TotalCases
 
 
 def index(request):
-    with StatisticClient() as statistics_client:
+    with StatisticsClient() as statistics_client:
         date = DateConfig.objects.all()[0].date
         query = Utils.graphql_query(date=date)
         payload = {"query": query}
