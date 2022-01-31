@@ -29,30 +29,32 @@ class CovidStatisticsType(DjangoObjectType):
 class CountryType(DjangoObjectType):
     class Meta:
         model = Country
-        fields = ('code', 'name', 'flag', 'coordinates', 'statistics')
+        fields = ('name', 'code', 'flag', 'coordinates', 'statistics', 'states')
 
 
-# class StateType(DjangoObjectType):
-#     class Meta:
-#         model = States
-#         fields = ('country', 'name', 'latitude', 'longitude', 'statistics')
-#         filter_fields = {
-#             'name': ['exact', 'icontains', 'istartswith']
-#         }
-#         interfaces = (relay.Node,)
+class StateType(DjangoObjectType):
+    class Meta:
+        model = States
+        fields = ('name', 'coordinate', 'date', 'statistics')
+        filter_fields = {
+            'date': ['exact', 'icontains', 'istartswith']
+        }
+        interfaces = (relay.Node,)
 
 
 class Query(graphene.ObjectType):
-    # statistics = DjangoFilterConnectionField(CountryType)
-    # states = DjangoFilterConnectionField(StateType)
     total_cases = DjangoFilterConnectionField(TotalCasesType)
-    statistics = graphene.List(CountryType)
+    country_statistics = graphene.List(CountryType)
+    # states_statistics = DjangoFilterConnectionField(StateType)
 
     def resolve_total_cases(self, info, **kwargs):
         return TotalCases.objects.all()
 
-    def resolve_statistics(self, info, **kwargs):
+    def resolve_country_statistics(self, info, **kwargs):
         return Country.objects.all()
+
+    # def resolve_states_statistics(self, info, **kwargs):
+    #     return States.objects.all()
 
 
 schema = graphene.Schema(query=Query)

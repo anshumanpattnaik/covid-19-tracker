@@ -33,20 +33,7 @@ class TotalCases(models.Model):
         db_table = 'total_covid_cases'
 
 
-class Country(models.Model):
-    name = models.CharField(max_length=500, unique=True)
-    code = models.CharField(max_length=500)
-    flag = models.TextField(unique=True)
-    coordinates = ArrayField(base_field=models.FloatField(), default=list)
-    statistics = models.ManyToManyField(CovidStatistics)
-
-    class Meta:
-        managed = True
-        db_table = 'country'
-
-
 class States(models.Model):
-    country = models.ManyToManyField(Country)
     name = models.CharField(max_length=500)
     coordinate = ArrayField(base_field=models.FloatField(), default=list)
     date = models.CharField(max_length=100, blank=True)
@@ -55,3 +42,16 @@ class States(models.Model):
     class Meta:
         managed = True
         db_table = 'states'
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=500, unique=True)
+    code = models.CharField(max_length=500)
+    flag = models.TextField(unique=True)
+    coordinates = ArrayField(base_field=models.FloatField(), default=list)
+    statistics = models.ManyToManyField(CovidStatistics)
+    states = models.ManyToManyField(States)
+
+    class Meta:
+        managed = True
+        db_table = 'country'

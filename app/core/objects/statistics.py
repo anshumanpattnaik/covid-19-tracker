@@ -52,9 +52,9 @@ class Country(JSONEntity):
 
 
 class CountryStatistics(JSONEntity):
-    def __init__(self, totalCases: TotalCasesEdges = None, statistics: [Country] = None):
+    def __init__(self, totalCases: TotalCasesEdges = None, countryStatistics: [Country] = None):
         self.totalCases = TotalCasesEdges.object(totalCases)
-        self.statistics = Country.object(statistics)
+        self.statistics = Country.object(countryStatistics)
 
 
 class StatisticsData(JSONEntity):

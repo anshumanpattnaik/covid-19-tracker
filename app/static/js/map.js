@@ -10,7 +10,7 @@ function loadMap() {
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v10',
         center: [-73.93324, 40.80877],
-        zoom: 1
+        zoom: 2
     }));
     map.on("load", function() {
         map.addSource(MAP_ID, {
@@ -29,13 +29,29 @@ function loadMap() {
                 [0, 0],
                 [100, 1],
                 [10000, 10],
-                [100000, 20],
-                [10000000, 30]
+                [100000, 25],
+                [10000000, 40]
               ]
             },
             "circle-opacity": 0.8,
-            "circle-color": "#e63946",
-            "circle-stroke-color": "#e63946",
+            "circle-color": {
+              "property": "confirmed",
+              "stops": [
+                [100, "#fca311"],
+                [10000, "#ff5400"],
+                [100000, "#e5383b"],
+                [10000000, "#e63946"]
+              ]
+            },
+            "circle-stroke-color": {
+              "property": "confirmed",
+              "stops": [
+                [100, "#fca311"],
+                [10000, "#ff5400"],
+                [100000, "#e5383b"],
+                [10000000, "#e63946"]
+              ]
+            },
             "circle-stroke-width": 2
           }
         });
