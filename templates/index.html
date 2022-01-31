@@ -71,7 +71,7 @@
                     body: query
                 }).then(res => res.json())
                   .then(res => {
-                      renderStatistics(res.data.totalCases.edges[0].node, res.data.statistics)
+                      renderStatistics(res.data.totalCases.edges[0].node, res.data.countryStatistics)
                       loadMap();
                 }).catch(err => {
                    console.log(err)

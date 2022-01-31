@@ -17,7 +17,7 @@ def index(request):
             dates.append(total.date)
         context = {
             "total_cases": response.data.totalCases.edges[0].node,
-            "statistics": response.data.statistics,
+            "statistics": response.data.countryStatistics,
             "date": date,
             "all_dates": dates,
             "graphql_query": payload
