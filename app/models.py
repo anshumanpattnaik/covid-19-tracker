@@ -36,7 +36,6 @@ class TotalCases(models.Model):
 class States(models.Model):
     name = models.CharField(max_length=500)
     coordinate = ArrayField(base_field=models.FloatField(), default=list)
-    date = models.CharField(max_length=100, blank=True)
     statistics = models.ManyToManyField(CovidStatistics)
 
     class Meta:
