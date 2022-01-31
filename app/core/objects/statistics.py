@@ -42,13 +42,21 @@ class StatisticsEdges(JSONEntity):
         self.edges = StatisticsNode.object(edges)
 
 
+class States(JSONEntity):
+    def __init__(self, name: str = None, coordinate: List = None, statistics: StatisticsEdges = None):
+        self.name = name
+        self.coordinate = coordinate
+        self.statistics = StatisticsEdges.object(statistics)
+
+
 class Country(JSONEntity):
     def __init__(self, name: str = None, flag: str = None, coordinates: List = None,
-                 statistics: StatisticsEdges = None):
+                 statistics: StatisticsEdges = None, states: States = None):
         self.name = name
         self.flag = flag
         self.coordinates = coordinates
         self.statistics = StatisticsEdges.object(statistics)
+        self.states = States.object(states)
 
 
 class CountryStatistics(JSONEntity):
