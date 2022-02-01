@@ -15,7 +15,8 @@ function loadMap() {
     map.on("load", function() {
         map.addSource(MAP_ID, {
             type: "geojson",
-            data: geoJSON
+            data: geoJSON,
+            generateId: true
         });
         map.addLayer({
           id: MAP_ID,
@@ -26,33 +27,22 @@ function loadMap() {
             "circle-radius": {
               "property": "confirmed",
               "stops": [
-                [0, 0],
-                [100, 1],
-                [10000, 10],
-                [100000, 25],
-                [10000000, 50]
+                [10, 0.5],
+                [500, 1],
+                [1000, 2],
+                [5000, 2.5],
+                [10000, 5],
+                [100000, 10],
+                [500000, 20],
+                [1000000, 25],
+                [5000000, 50],
+                [10000000, 60]
               ]
             },
             "circle-opacity": 0.8,
-            "circle-color": {
-              "property": "confirmed",
-              "stops": [
-                [100, "#fca311"],
-                [10000, "#ff5400"],
-                [100000, "#e5383b"],
-                [10000000, "#e63946"]
-              ]
-            },
-            "circle-stroke-color": {
-              "property": "confirmed",
-              "stops": [
-                [100, "#fca311"],
-                [10000, "#ff5400"],
-                [100000, "#e5383b"],
-                [10000000, "#e63946"]
-              ]
-            },
-            "circle-stroke-width": 2
+            "circle-color": "#4993c7",
+            "circle-stroke-color": "#58ade8",
+            "circle-stroke-width": 1.5
           }
         });
     });
@@ -79,4 +69,12 @@ function loadMap() {
           map.getCanvas().style.cursor = "";
           popup.remove();
     });
+    // map.setPaintProperty('hackbotone', 'fill-color', [
+    //     'match',
+    //     ['get', 'confirmed'],
+    //     100, '#fca311',
+    //     10000, '#ff5400',
+    //     100000, '#e5383b',
+    //     10000000, '#e63946',
+    // ]);
 }
