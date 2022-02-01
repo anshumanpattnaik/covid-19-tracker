@@ -506,7 +506,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
 	align-self: center;
 	border-top: none;
-	border-bottom-color: #fff
+	border-bottom-color: #1d1d1d
 }
 
 .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {
