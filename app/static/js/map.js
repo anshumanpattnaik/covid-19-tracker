@@ -55,14 +55,13 @@ function loadMap() {
 
           let coordinates = e.features[0].geometry.coordinates.slice();
           let name = e.features[0].properties.name;
-          let confirmed = e.features[0].properties.confirmed;
 
           while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
           }
           popup
             .setLngLat(coordinates)
-            .setHTML(name+" == "+confirmed)
+            .setHTML(name)
             .addTo(map);
     });
     map.on("mouseleave", MAP_ID, function() {

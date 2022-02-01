@@ -29,7 +29,28 @@ function renderStatistics(totalCases, statistics) {
                         coordinates: data.coordinates
                     },
                     properties: {
-                        name: `<strong>Country</strong><p>${data.name}</p>`,
+                        name: `<div class="map-popup-container">
+                                    <div class="flag-container">
+                                        <img src=${data.flag} />
+                                    </div>
+                                    <div>
+                                        <div class="map-country-container">
+                                            <strong class="country">${data.name}</strong>
+                                        </div>
+                                        <div class="map-container-divider"></div>
+                                        <div class="map-statistics-container">
+                                            <div class="statistics">
+                                                <span class="cases">${data.statistics.edges[0].node.confirmed.toLocaleString()}</span>
+                                                <strong class="label">Confirmed</strong>
+                                            </div>
+                                            <div class="statistics">
+                                                <span class="cases">${data.statistics.edges[0].node.deaths.toLocaleString()}</span>
+                                                <strong class="label">Deaths</strong>
+                                            </div>
+                                        </div>  
+                                    </div>
+                               </div>
+                               `,
                         confirmed: data.statistics.edges[0].node.confirmed,
                         deaths: data.statistics.edges[0].node.deaths,
                         recovered: data.statistics.edges[0].node.recovered

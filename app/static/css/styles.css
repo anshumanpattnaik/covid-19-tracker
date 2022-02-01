@@ -40,6 +40,60 @@
 ::-webkit-scrollbar-thumb:hover {
     background: var(--1a659e);
 }
+.map-popup-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #1d1d1d;
+    border: 0.5px solid #2c3136;
+}
+.map-popup-container > .flag-container {
+    width: 17em;
+    height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.map-popup-container > .flag-container > img {
+    border-top-left-radius: 0.1em;
+    border-top-right-radius: 0.1em;
+}
+.map-country-container {
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.map-country-container > .country {
+    font-size: 1.1rem;
+    color: #FFFFFF;
+    margin-left: 0.5em;
+}
+.map-container-divider {
+    height: 1px;
+    background-color: #2c3136;
+}
+.map-statistics-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+    margin-top: 0.5em;
+}
+.map-statistics-container > .statistics {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.map-statistics-container > .statistics > .cases {
+    font-size: 0.7rem;
+    color: #FFFFFF;
+}
+.map-statistics-container > .statistics > .label {
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    font-weight: bold;
+    color: #407ba7;
+}
 html, body {
     margin: 0;
     overflow: hidden;
