@@ -115,41 +115,56 @@ function addCountryStatistics(data) {
     let countryListContainer = document.createElement("div");
     countryListContainer.setAttribute("class", "country-list-container");
     countryListContainer.addEventListener('click', function (e) {
+        // remove existing popup
+        popup.remove();
+
+        let ZOOM_LEVEL = 4;
+        let COUNTRY_BOUNDARIES = 'country-boundaries';
+
         map.flyTo({
             center: data.coordinates,
-            zoom: 4,
+            zoom: ZOOM_LEVEL,
             bearing: 0,
             speed: 1,
             curve: 2,
-
             easing: (t) => t,
             essential: true
         });
-        map.addLayer({
-          id: 'country-boundaries',
-          source: {
-            type: 'vector',
-            url: 'mapbox://mapbox.country-boundaries-v1',
-          },
-          'source-layer': 'country_boundaries',
-          type: 'fill',
-          paint: {
-            'fill-color': '#d2361e',
-            'fill-opacity': 0.4,
-          },
-        }, 'country-label');
-        map.setFilter('country-boundaries', [
+
+        let mapCountryLayer = map.getLayer(COUNTRY_BOUNDARIES);
+        if(typeof mapCountryLayer == 'undefined') {
+            map.addLayer({
+              id: COUNTRY_BOUNDARIES,
+              source: {
+                type: 'vector',
+                url: 'mapbox://mapbox.country-boundaries-v1',
+              },
+              'source-layer': 'country_boundaries',
+              type: 'fill',
+              paint: {
+                'fill-color': '#e63946',
+                'fill-opacity': 0.4,
+              },
+            }, 'country-label');
+        }
+        map.setFilter(COUNTRY_BOUNDARIES, [
             "==",
             "iso_3166_1_alpha_3",
             data.code
         ]);
-        let coordinates = data.coordinates.slice();
-        let popup_view = renderPopupView(data.name, data.flag, data.statistics.edges[0].node.confirmed, data.statistics.edges[0].node.deaths);
-
-        popup
-            .setLngLat(coordinates)
-            .setHTML(popup_view)
-            .addTo(map);
+        let lastZoomOffset = map.getZoom();
+        map.on('zoom', () => {
+          const currentZoomOffset = map.getZoom();
+          if (currentZoomOffset === ZOOM_LEVEL) {
+              let coordinates = data.coordinates.slice();
+              let popup_view = renderPopupView(data.name, data.flag, data.statistics.edges[0].node.confirmed, data.statistics.edges[0].node.deaths);
+              popup
+                  .setLngLat(coordinates)
+                  .setHTML(popup_view)
+                  .addTo(map);
+          }
+          lastZoomOffset = currentZoomOffset;
+        });
     });
 
     let country = document.createElement("div");
