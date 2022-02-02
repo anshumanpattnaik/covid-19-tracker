@@ -29,28 +29,8 @@ function renderStatistics(totalCases, statistics) {
                         coordinates: data.coordinates
                     },
                     properties: {
-                        name: `<div class="map-popup-container">
-                                    <div class="flag-container">
-                                        <img src=${data.flag} />
-                                    </div>
-                                    <div>
-                                        <div class="map-country-container">
-                                            <strong class="country">${data.name}</strong>
-                                        </div>
-                                        <div class="map-container-divider"></div>
-                                        <div class="map-statistics-container">
-                                            <div class="statistics">
-                                                <span class="cases">${data.statistics.edges[0].node.confirmed.toLocaleString()}</span>
-                                                <strong class="label">Confirmed</strong>
-                                            </div>
-                                            <div class="statistics">
-                                                <span class="cases">${data.statistics.edges[0].node.deaths.toLocaleString()}</span>
-                                                <strong class="label">Deaths</strong>
-                                            </div>
-                                        </div>  
-                                    </div>
-                               </div>
-                               `,
+                        popup_view: renderPopupView(data.name, data.flag, data.statistics.edges[0].node.confirmed,
+                                                    data.statistics.edges[0].node.deaths),
                         confirmed: data.statistics.edges[0].node.confirmed,
                         deaths: data.statistics.edges[0].node.deaths,
                         recovered: data.statistics.edges[0].node.recovered
@@ -96,12 +76,81 @@ function filterStatistics(name) {
 }
 
 /**
+ * This function returns custom popup view HTML design that renders over the map.
+ * @param name is country name
+ * @param flag is country flag
+ * @param confirmed is confirmed cases
+ * @param deaths is deaths cases
+ * @returns HTML popup view
+ */
+function renderPopupView(name, flag, confirmed, deaths) {
+    return `<div class="map-popup-container">
+               <div class="flag-container">
+                   <img src=${flag} />
+               </div>
+               <div>
+                  <div class="map-country-container">
+                     <strong class="country">${name}</strong>
+                  </div>
+                  <div class="map-container-divider"></div>
+                     <div class="map-statistics-container">
+                        <div class="statistics">
+                           <span class="cases">${confirmed.toLocaleString()}</span>
+                           <strong class="label">Confirmed</strong>
+                        </div>
+                        <div class="statistics">
+                           <span class="cases">${deaths.toLocaleString()}</span>
+                            <strong class="label">Deaths</strong>
+                        </div>
+                     </div>
+                  </div>
+               </div>`
+}
+
+/**
  * This function adds list of countries with the statistics to the parent container.
  * @param data contains country list with the covid statistics
  */
 function addCountryStatistics(data) {
     let countryListContainer = document.createElement("div");
     countryListContainer.setAttribute("class", "country-list-container");
+    countryListContainer.addEventListener('click', function (e) {
+        map.flyTo({
+            center: data.coordinates,
+            zoom: 4,
+            bearing: 0,
+            speed: 1,
+            curve: 2,
+
+            easing: (t) => t,
+            essential: true
+        });
+        map.addLayer({
+          id: 'country-boundaries',
+          source: {
+            type: 'vector',
+            url: 'mapbox://mapbox.country-boundaries-v1',
+          },
+          'source-layer': 'country_boundaries',
+          type: 'fill',
+          paint: {
+            'fill-color': '#d2361e',
+            'fill-opacity': 0.4,
+          },
+        }, 'country-label');
+        map.setFilter('country-boundaries', [
+            "==",
+            "iso_3166_1_alpha_3",
+            data.code
+        ]);
+        let coordinates = data.coordinates.slice();
+        let popup_view = renderPopupView(data.name, data.flag, data.statistics.edges[0].node.confirmed, data.statistics.edges[0].node.deaths);
+
+        popup
+            .setLngLat(coordinates)
+            .setHTML(popup_view)
+            .addTo(map);
+    });
 
     let country = document.createElement("div");
     country.setAttribute("class", "country");

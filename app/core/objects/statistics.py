@@ -50,9 +50,10 @@ class States(JSONEntity):
 
 
 class Country(JSONEntity):
-    def __init__(self, name: str = None, flag: str = None, coordinates: List = None,
+    def __init__(self, name: str = None, code: str = None, flag: str = None, coordinates: List = None,
                  statistics: StatisticsEdges = None, states: States = None):
         self.name = name
+        self.code = code
         self.flag = flag
         self.coordinates = coordinates
         self.statistics = StatisticsEdges.object(statistics)
