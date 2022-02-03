@@ -207,6 +207,17 @@ a:hover {
     z-index: 999;
     background-color: var(--2c3136);
 }
+.nrf-container {
+    height: 15em;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.nrf-container > span {
+    font-family: SpartanBold, serif;
+    font-size: 0.9rem;
+    color: var(--3d5a80);
+}
 .country-container > .search-container {
     display: flex;
     align-items: center;

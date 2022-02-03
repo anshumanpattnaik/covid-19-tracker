@@ -1,4 +1,5 @@
 let statisticsContainer = document.querySelector(".statistics-container");
+let nrfContainer = document.querySelector(".nrf-container");
 let searchInput = document.getElementById("input");
 let headerTotalConfirmed = document.getElementById("header-total-confirmed");
 let totalConfirmed = document.getElementById("total-confirmed");
@@ -54,15 +55,21 @@ function renderStatistics(totalCases, statistics) {
 
 searchInput.addEventListener('input', function (e) {
     // clear list
+    statisticsContainer.style.display = "block";
     statisticsContainer.innerHTML = ``;
 
     let data = e.target.value;
     if (data.length >= 1) {
         let filteredValues = filterStatistics(data);
+        if(filteredValues.length === 0) {
+            statisticsContainer.style.display = "none";
+            nrfContainer.style.display = "flex";
+        } else {
+            nrfContainer.style.display = "none";
+        }
         filteredValues.forEach(value => {
             if(value.statistics.edges.length >= 1) {
-                console.log("data: > " + value.statistics.edges);
-                addCountryStatistics(value)
+                addCountryStatistics(value);
             }
         });
     } else {
