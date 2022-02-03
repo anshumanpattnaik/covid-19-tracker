@@ -221,7 +221,7 @@ function addCountryStatistics(data) {
         });
         let selector = document.querySelector("#country-"+data.code);
         selector.style.backgroundColor = SELECTED_COLOR;
-        if(selector.getAttribute('id') === selectedValue){
+        if(selector.getAttribute('id') === selectedValue) {
             selector.addEventListener("mouseover", function() {
                 selector.style.backgroundColor = SELECTED_COLOR;
             });
@@ -229,6 +229,10 @@ function addCountryStatistics(data) {
                 selector.style.backgroundColor = SELECTED_COLOR;
             });
         }
+
+        // Google News crawling
+
+
         flyToCoordinate(data);
     });
 }
