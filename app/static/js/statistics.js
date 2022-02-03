@@ -190,23 +190,27 @@ function addCountryStatistics(data) {
     countryListContainer.addEventListener('click', function (e) {
         let selectedValue = "country-"+data.code;
         let countryItem = document.querySelectorAll(".country-list-container");
+        let DESELECTED_COLOR = '#1d1d1d';
+        let SELECTED_COLOR = '#003f6d';
+        let HOVER_COLOR = '#343a40';
+
         countryItem.forEach(item => {
-            item.style.backgroundColor = '#1d1d1d';
+            item.style.backgroundColor = DESELECTED_COLOR;
             item.addEventListener("mouseover", function() {
-                item.style.backgroundColor = "#343a40";
+                item.style.backgroundColor = HOVER_COLOR;
             });
             item.addEventListener("mouseout", function() {
-                item.style.backgroundColor = "#1d1d1d";
+                item.style.backgroundColor = DESELECTED_COLOR;
             });
         });
         let selector = document.querySelector("#country-"+data.code);
-        selector.style.backgroundColor = '#343a40';
+        selector.style.backgroundColor = SELECTED_COLOR;
         if(selector.getAttribute('id') === selectedValue){
             selector.addEventListener("mouseover", function() {
-                selector.style.backgroundColor = "#343a40";
+                selector.style.backgroundColor = SELECTED_COLOR;
             });
             selector.addEventListener("mouseout", function() {
-                selector.style.backgroundColor = "#343a40";
+                selector.style.backgroundColor = SELECTED_COLOR;
             });
         }
         flyToCoordinate(data);
