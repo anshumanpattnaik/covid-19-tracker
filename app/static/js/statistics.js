@@ -120,9 +120,7 @@ function renderPopupView(name, flag, confirmed, deaths) {
 function addCountryStatistics(data) {
     let countryListContainer = document.createElement("div");
     countryListContainer.setAttribute("class", "country-list-container");
-    countryListContainer.addEventListener('click', function (e) {
-        flyToCoordinate(data);
-    });
+    countryListContainer.setAttribute("id", "country-"+data.code);
 
     let country = document.createElement("div");
     country.setAttribute("class", "country");
@@ -188,4 +186,29 @@ function addCountryStatistics(data) {
     countryListContainer.append(recoveredStatistics);
 
     statisticsContainer.append(countryListContainer);
+
+    countryListContainer.addEventListener('click', function (e) {
+        let selectedValue = "country-"+data.code;
+        let countryItem = document.querySelectorAll(".country-list-container");
+        countryItem.forEach(item => {
+            item.style.backgroundColor = '#1d1d1d';
+            item.addEventListener("mouseover", function() {
+                item.style.backgroundColor = "#343a40";
+            });
+            item.addEventListener("mouseout", function() {
+                item.style.backgroundColor = "#1d1d1d";
+            });
+        });
+        let selector = document.querySelector("#country-"+data.code);
+        selector.style.backgroundColor = '#343a40';
+        if(selector.getAttribute('id') === selectedValue){
+            selector.addEventListener("mouseover", function() {
+                selector.style.backgroundColor = "#343a40";
+            });
+            selector.addEventListener("mouseout", function() {
+                selector.style.backgroundColor = "#343a40";
+            });
+        }
+        flyToCoordinate(data);
+    });
 }
