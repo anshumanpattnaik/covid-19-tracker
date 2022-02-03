@@ -50,6 +50,11 @@ function renderStatistics(totalCases, statistics) {
         totalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
         totalDeaths.innerText = totalCases.totalDeaths.toLocaleString();
         totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
+        if(totalCases.totalRecovered >= 1){
+            totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
+        } else {
+            totalRecovered.innerText = "N/A";
+        }
     }
 }
 
@@ -178,7 +183,11 @@ function addCountryStatistics(data) {
 
     let recoveredCount = document.createElement("span");
     recoveredCount.setAttribute("class", "count");
-    recoveredCount.innerText = data.statistics.edges[0].node.recovered.toLocaleString();
+    if(data.statistics.edges[0].node.recovered >= 1){
+        recoveredCount.innerText = data.statistics.edges[0].node.recovered.toLocaleString();
+    } else {
+        recoveredCount.innerText = "N/A";
+    }
 
     let recoveredLabel = document.createElement("span");
     recoveredLabel.setAttribute("class", "label");
