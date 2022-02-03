@@ -230,7 +230,7 @@ function addCountryStatistics(data) {
             });
         }
 
-        // Google News crawling
+        // COVID News
 
 
         flyToCoordinate(data);

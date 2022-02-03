@@ -35,15 +35,18 @@ def index(request):
 class ParseCOVIDNews(APIView):
 
     def get(self, request):
-        page = requests.get("https://news.google.com/covid19/map?mid=%2Fm%2F03rjj&hl=en-IN&gl=IN&ceid=IN%3Aen")
+        code = '/m/03rjj'
+        page = requests.get(f"https://news.google.com/covid19/map?mid={code}&hl=en-IN&gl=IN&ceid=IN%3Aen")
         soup = BeautifulSoup(page.content, "html.parser")
-        vaccine_statistics = soup.find_all("div", {"class": "tZjT9b"})
-        print(vaccine_statistics)
+        vaccine_statistics = soup.find_all("div", {"class": "UvMayb"})
+        total_does = vaccine_statistics[2].decode_contents().strip()
+        vaccinated = vaccine_statistics[3].decode_contents().strip()
 
-        top_news = soup.find_all("div", {"class": "D5tATe pym81b"})
-        for top in top_news[0].findAll('a'):
-            # print(f'{top}')
-            print(f'{top.get("href")}')
-            print(f'{top.text}')
-            print()
+        print(f'{total_does} ==== {vaccinated}')
+
+        # top_news = soup.find_all("div", {"class": "D5tATe pym81b"})
+        # for top in top_news[0].findAll('a'):
+        #     print(f'{top.get("href")}')
+        #     print(f'{top.text}')
+        #     print()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
