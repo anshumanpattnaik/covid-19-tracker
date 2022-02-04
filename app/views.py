@@ -1,3 +1,4 @@
+import json
 import re
 
 import requests
@@ -42,11 +43,28 @@ class ParseCOVIDNews(APIView):
         total_does = vaccine_statistics[2].decode_contents().strip()
         vaccinated = vaccine_statistics[3].decode_contents().strip()
 
-        print(f'{total_does} ==== {vaccinated}')
+        vaccine_status = {
+            "total_does": total_does,
+            "vaccinated": vaccinated
+        }
+        print(f'{vaccine_status}')
 
-        # top_news = soup.find_all("div", {"class": "D5tATe pym81b"})
-        # for top in top_news[0].findAll('a'):
-        #     print(f'{top.get("href")}')
-        #     print(f'{top.text}')
-        #     print()
+        top_news = []
+        articles = soup.find_all("article")
+        for article in articles:
+            thumbnail = article.find("img")["src"]
+            thumbnail = thumbnail.split("=")
+            a = article.find("h4").find("a")
+            title = a.text
+            source = f'https://news.google.com{a["href"].replace(".", "")}'
+            top_news.append({
+                "title": title,
+                "source": source,
+                "thumbnail": thumbnail[0]
+            })
+        results = {
+            "vaccine_status": vaccine_status,
+            "top_news": top_news
+        }
+        print(json.dumps(results))
         return Response({"status": "success"}, status=status.HTTP_200_OK)
