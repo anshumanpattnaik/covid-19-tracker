@@ -50,7 +50,7 @@ function renderStatistics(totalCases, statistics) {
         totalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
         totalDeaths.innerText = totalCases.totalDeaths.toLocaleString();
         totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
-        if(totalCases.totalRecovered >= 1){
+        if(totalCases.totalRecovered >= 1) {
             totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
         } else {
             totalRecovered.innerText = "N/A";
@@ -231,8 +231,6 @@ function addCountryStatistics(data) {
         }
 
         // COVID News
-
-
         flyToCoordinate(data);
     });
 }

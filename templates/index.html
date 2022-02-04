@@ -57,8 +57,6 @@
             let totalCases = {{ total_cases|safe }};
             let statistics = {{ statistics|safe }};
         </script>
-        <script src="{% static 'js/statistics.js' %}"></script>
-        <script src="{% static 'js/map.js' %}"></script>
         <script>
             let menu = [
                 {
@@ -74,7 +72,18 @@
                     "icon": "info"
                 }
             ]
+
+            let countryContainer = document.querySelector('.country-container');
+            let mapContainer = document.querySelector("#map");
             let mobileNavContainer = document.querySelector('.mobile-nav-container');
+
+            function resetMenuSelection() {
+                // reset the selection
+                document.querySelectorAll(".menu-label").forEach(item => item.style.color = "#5f6673");
+                document.querySelectorAll(".menu-label").forEach(item => item.style.fontWeight = "normal");
+                document.querySelectorAll(".material-icons").forEach(item => item.style.color = "#5f6673");
+            }
+
             for(let i=0; i<menu.length; i++) {
                 let menuContainer = document.createElement("div");
                 menuContainer.setAttribute("class", "menu");
@@ -99,16 +108,32 @@
                 document.querySelector("#menu-icon-"+menu[0].label).style.color = "#FFF";
 
                 menuContainer.addEventListener("click", function () {
-                    document.querySelectorAll(".menu-label").forEach(item => item.style.color = "#5f6673");
-                    document.querySelectorAll(".menu-label").forEach(item => item.style.fontWeight = "normal");
-                    document.querySelectorAll(".material-icons").forEach(item => item.style.color = "#5f6673");
+                    // reset the selection
+                    resetMenuSelection();
 
+                    // changing style selection
                     document.querySelector("#menu-label-"+menu[i].label).style.color = "#407ba7";
                     document.querySelector("#menu-label-"+menu[i].label).style.fontWeight = "bold";
                     document.querySelector("#menu-icon-"+menu[i].label).style.color = "#FFF";
+
+                    if(menu[i].label === "Home") {
+                        countryContainer.style.display = "flex";
+                        mapContainer.style.display = "none";
+                    }
+                    if(menu[i].label === "Map") {
+                        countryContainer.style.display = "none";
+                        mapContainer.style.display = "block";
+                    }
+                    if(menu[i].label === "About") {
+                        alert("About");
+                        // countryContainer.style.display = "none";
+                        // map.style.display = "none";
+                    }
                 });
             }
         </script>
+        <script src="{% static 'js/statistics.js' %}"></script>
+        <script src="{% static 'js/map.js' %}"></script>
         <script>
             let graphqlQuery = {{ graphql_query|safe }};
             let dateSelector = document.getElementById("date-selector");

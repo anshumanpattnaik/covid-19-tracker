@@ -78,6 +78,23 @@ function loadMap() {
 }
 
 function flyToCoordinate(data) {
+    /**
+     * The below logic is handled for mobile fly to co-ordinate / Map menu selection
+     */
+    let countryContainer = document.querySelector('.country-container');
+    let mapContainer = document.querySelector("#map");
+    let mobileNavContainer = document.querySelector('.mobile-nav-container').offsetWidth;
+    if(mobileNavContainer > 0) {
+        resetMenuSelection();
+
+        // change map item selection
+        document.querySelector("#menu-label-"+menu[1].label).style.color = "#407ba7";
+        document.querySelector("#menu-label-"+menu[1].label).style.fontWeight = "bold";
+        document.querySelector("#menu-icon-"+menu[1].label).style.color = "#FFF";
+
+        countryContainer.style.display = "none";
+        mapContainer.style.display = "block";
+    }
     // remove existing popup
     popup.remove();
 

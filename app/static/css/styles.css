@@ -295,7 +295,7 @@ a:hover {
     color: var(--407ba7);
     margin-top: 1em;
 }
-.root-container > #map {
+#map {
     width: 100%;
     margin-left: 40em;
 }
@@ -312,10 +312,8 @@ a:hover {
     .country-list-container > .country {
         width: 5em;
     }
-    .root-container > #map {
-        width: 100%;
+    #map {
         margin-left: 0;
-        display: none;
     }
     .mobile-nav-container {
         width: 100vw;
