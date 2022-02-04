@@ -94,6 +94,10 @@
                 menuContainer.append(menuLabel);
                 mobileNavContainer.append(menuContainer);
 
+                document.querySelector("#menu-label-"+menu[0].label).style.color = "#407ba7";
+                document.querySelector("#menu-label-"+menu[0].label).style.fontWeight = "bold";
+                document.querySelector("#menu-icon-"+menu[0].label).style.color = "#FFF";
+
                 menuContainer.addEventListener("click", function () {
                     document.querySelectorAll(".menu-label").forEach(item => item.style.color = "#5f6673");
                     document.querySelectorAll(".menu-label").forEach(item => item.style.fontWeight = "normal");
