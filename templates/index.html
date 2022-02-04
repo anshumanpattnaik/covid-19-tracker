@@ -52,12 +52,59 @@
             <br/>
         </div>
         <div id="map"></div>
+        <div class="mobile-nav-container"></div>
         <script>
             let totalCases = {{ total_cases|safe }};
             let statistics = {{ statistics|safe }};
         </script>
         <script src="{% static 'js/statistics.js' %}"></script>
         <script src="{% static 'js/map.js' %}"></script>
+        <script>
+            let menu = [
+                {
+                    "label": "Home",
+                    "icon": "home"
+                },
+                {
+                    "label": "Map",
+                    "icon": "map"
+                },
+                {
+                    "label": "About",
+                    "icon": "info"
+                }
+            ]
+            let mobileNavContainer = document.querySelector('.mobile-nav-container');
+            for(let i=0; i<menu.length; i++) {
+                let menuContainer = document.createElement("div");
+                menuContainer.setAttribute("class", "menu");
+                menuContainer.setAttribute("id", "menu-"+menu[i].label);
+
+                let menuIcon = document.createElement("span");
+                menuIcon.setAttribute("class", "material-icons");
+                menuIcon.setAttribute("id", "menu-icon-"+menu[i].label);
+                menuIcon.innerHTML = menu[i].icon;
+
+                let menuLabel = document.createElement("span");
+                menuLabel.setAttribute("class", "menu-label");
+                menuLabel.setAttribute("id", "menu-label-"+menu[i].label);
+                menuLabel.innerHTML = menu[i].label;
+
+                menuContainer.append(menuIcon);
+                menuContainer.append(menuLabel);
+                mobileNavContainer.append(menuContainer);
+
+                menuContainer.addEventListener("click", function () {
+                    document.querySelectorAll(".menu-label").forEach(item => item.style.color = "#5f6673");
+                    document.querySelectorAll(".menu-label").forEach(item => item.style.fontWeight = "normal");
+                    document.querySelectorAll(".material-icons").forEach(item => item.style.color = "#5f6673");
+
+                    document.querySelector("#menu-label-"+menu[i].label).style.color = "#407ba7";
+                    document.querySelector("#menu-label-"+menu[i].label).style.fontWeight = "bold";
+                    document.querySelector("#menu-icon-"+menu[i].label).style.color = "#FFF";
+                });
+            }
+        </script>
         <script>
             let graphqlQuery = {{ graphql_query|safe }};
             let dateSelector = document.getElementById("date-selector");
