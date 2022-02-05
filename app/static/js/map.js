@@ -60,6 +60,9 @@ function loadMap() {
               }
         });
     });
+    map.on('idle',function(){
+        map.resize();
+    });
     map.on("mouseenter", MAP_ID, function(e) {
         map.getCanvas().style.cursor = "pointer";
 

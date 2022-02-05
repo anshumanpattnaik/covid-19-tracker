@@ -297,7 +297,84 @@ a:hover {
 }
 #map {
     width: 100%;
+    height: 100vh;
     margin-left: 40em;
+}
+.covid-news-container {
+    width: 75vw;
+    /*height: 25vh;*/
+    display: flex;
+    align-items: center;
+    position: absolute;
+    margin-left: 30.2em;
+    bottom: 33px;
+    overflow-y: hidden!important;
+    overflow-x: scroll!important;
+}
+.covid-news-container > .card {
+    height: 18em;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.2em;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 1em;
+    background-color: var(--white);
+    transition: .3s;
+}
+.covid-news-container > .card:hover {
+    cursor: pointer;
+}
+.covid-news-container > .card > .thumbnail-container {
+    width: 20em;
+    height: 10em;
+    overflow: hidden;
+    position: relative;
+}
+.covid-news-container > .card > .thumbnail-container > .thumbnail {
+    width: 100%;
+    height: 10em;
+    display: block;
+    object-fit: cover;
+    border-top-left-radius: 0.2em;
+    border-top-right-radius: 0.2em;
+}
+.covid-news-container > .card > .text-container {
+    /*width: 15em;*/
+    height: 5em;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    /*margin-left: 0.2em;*/
+    /*background-color: #3d5a80;*/
+}
+.covid-news-container > .card > .text-container > .source {
+    display: flex;
+    align-items: center;
+}
+.covid-news-container > .card > .text-container > .source > .favicon {
+    height: 0.9em;
+}
+.covid-news-container > .card > .text-container > .source > .news-source {
+    font-family: SpartanBold, serif;
+    font-size: 0.6rem;
+    color: var(--343a40);
+    margin-left: 1em;
+}
+.covid-news-container > .card > .text-container > .headline {
+    font-family: SpartanBold, serif;
+    font-size: 0.9rem;
+    color: var(--1d1d1d);
+    line-height: 1.8em;
+    margin-top: 0.9em;
+}
+.covid-news-container > .card:hover .headline {
+    text-decoration: underline;
+}
+.covid-news-container > .card > .text-container > .timestamp {
+    font-family: SpartanRegular, serif;
+    font-size: 0.65rem;
+    color: #606060;
+    margin-top: 1.1em;
 }
 .mobile-nav-container {
     display: none;
@@ -313,6 +390,7 @@ a:hover {
         width: 5em;
     }
     #map {
+        /*display: none;*/
         margin-left: 0;
     }
     .mobile-nav-container {
@@ -340,5 +418,9 @@ a:hover {
         font-size: 0.6em;
         color: #5f6673;
         margin: 0.5em;
+    }
+    .covid-news-container {
+        width: 100vw;
+        margin-left: 0;
     }
 }

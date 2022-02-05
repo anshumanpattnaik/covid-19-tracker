@@ -52,110 +52,91 @@
             <br/>
         </div>
         <div id="map"></div>
+        <div class="covid-news-container">
+{#            <div class="card">#}
+{#                <img src="https://lh3.googleusercontent.com/proxy/z7IMpkuWKAEhI2EJySw6V8-08ulOauD8v9PV-IDQAeXbaH8ltQKyyw-5lRR7ein35AV6Pshdb6YABVlthdJp3YsJV4ftR_-ZbkgxtLnMQB5a10f-3RhPrJi6LLs0ZYs36uhjR0IuUNuka7v9ZOjfAebdWA"#}
+{#                     class="thumbnail"/>#}
+{#                <div class="text-container">#}
+{#                    <div class="source">#}
+{#                        <img src="https://encrypted-tbn2.gstatic.com/faviconV2?url=https://apnews.com&client=NEWS_360&size=96&type=FAVICON&fallback_opts=TYPE,SIZE,URL"#}
+{#                             class="favicon">#}
+{#                        <span class="news-source">Associated Press</span>#}
+{#                    </div>#}
+{#                    <span class="headline">Live updates from the 2022 Beijing Olympics</span>#}
+{#                    <p class="timestamp">15 hours ago</p>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
         <div class="mobile-nav-container"></div>
         <script>
             let totalCases = {{ total_cases|safe }};
             let statistics = {{ statistics|safe }};
+            let graphqlQuery = {{ graphql_query|safe }};
         </script>
-        <script>
-            let menu = [
-                {
-                    "label": "Home",
-                    "icon": "home"
-                },
-                {
-                    "label": "Map",
-                    "icon": "map"
-                },
-                {
-                    "label": "About",
-                    "icon": "info"
-                }
-            ]
-
-            let countryContainer = document.querySelector('.country-container');
-            let mapContainer = document.querySelector("#map");
-            let mobileNavContainer = document.querySelector('.mobile-nav-container');
-
-            function resetMenuSelection() {
-                // reset the selection
-                document.querySelectorAll(".menu-label").forEach(item => item.style.color = "#5f6673");
-                document.querySelectorAll(".menu-label").forEach(item => item.style.fontWeight = "normal");
-                document.querySelectorAll(".material-icons").forEach(item => item.style.color = "#5f6673");
-            }
-
-            for(let i=0; i<menu.length; i++) {
-                let menuContainer = document.createElement("div");
-                menuContainer.setAttribute("class", "menu");
-                menuContainer.setAttribute("id", "menu-"+menu[i].label);
-
-                let menuIcon = document.createElement("span");
-                menuIcon.setAttribute("class", "material-icons");
-                menuIcon.setAttribute("id", "menu-icon-"+menu[i].label);
-                menuIcon.innerHTML = menu[i].icon;
-
-                let menuLabel = document.createElement("span");
-                menuLabel.setAttribute("class", "menu-label");
-                menuLabel.setAttribute("id", "menu-label-"+menu[i].label);
-                menuLabel.innerHTML = menu[i].label;
-
-                menuContainer.append(menuIcon);
-                menuContainer.append(menuLabel);
-                mobileNavContainer.append(menuContainer);
-
-                document.querySelector("#menu-label-"+menu[0].label).style.color = "#407ba7";
-                document.querySelector("#menu-label-"+menu[0].label).style.fontWeight = "bold";
-                document.querySelector("#menu-icon-"+menu[0].label).style.color = "#FFF";
-
-                menuContainer.addEventListener("click", function () {
-                    // reset the selection
-                    resetMenuSelection();
-
-                    // changing style selection
-                    document.querySelector("#menu-label-"+menu[i].label).style.color = "#407ba7";
-                    document.querySelector("#menu-label-"+menu[i].label).style.fontWeight = "bold";
-                    document.querySelector("#menu-icon-"+menu[i].label).style.color = "#FFF";
-
-                    if(menu[i].label === "Home") {
-                        countryContainer.style.display = "flex";
-                        mapContainer.style.display = "none";
-                    }
-                    if(menu[i].label === "Map") {
-                        countryContainer.style.display = "none";
-                        mapContainer.style.display = "block";
-                    }
-                    if(menu[i].label === "About") {
-                        alert("About");
-                        // countryContainer.style.display = "none";
-                        // map.style.display = "none";
-                    }
-                });
-            }
-        </script>
+        <script src="{% static 'js/mobile-nav-menu.js' %}"></script>
         <script src="{% static 'js/statistics.js' %}"></script>
         <script src="{% static 'js/map.js' %}"></script>
+        <script src="{% static 'js/filter-statistics.js' %}"></script>
         <script>
-            let graphqlQuery = {{ graphql_query|safe }};
-            let dateSelector = document.getElementById("date-selector");
-            dateSelector.addEventListener("change", function() {
-                let query = JSON.stringify(graphqlQuery);
-                let date = query.match(/\d{2}([\/.-])\d{2}\1\d{4}/g);
-                query = query.replaceAll(date[0], dateSelector.value);
-                fetch('/graphql', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: query
-                }).then(res => res.json())
-                  .then(res => {
-                      renderStatistics(res.data.totalCases.edges[0].node, res.data.countryStatistics);
-                      loadMap();
+            let covidNewsContainer = document.querySelector(".covid-news-container");
+            fetch('/covid-news')
+                .then(res => res.json())
+                .then(res => {
+                    if(res.status !== undefined) {
+                        res.status.top_news.map(news => {
+                            let card = document.createElement("div");
+                            card.setAttribute("class", "card");
+
+                            let thumbnailContainer = document.createElement("div");
+                            thumbnailContainer.setAttribute("class", "thumbnail-container");
+
+                            let thumbnail = document.createElement("img");
+                            thumbnail.setAttribute("class", "thumbnail");
+                            thumbnail.src = news.thumbnail;
+
+                            let textContainer = document.createElement("div");
+                            textContainer.setAttribute("class", "text-container");
+
+                            let source = document.createElement("div");
+                            source.setAttribute("class", "source");
+
+                            let newsFavIcon = document.createElement("img");
+                            newsFavIcon.setAttribute("class", "favicon");
+                            newsFavIcon.src = news.news_source.favicon;
+
+                            let newsSource = document.createElement("span");
+                            newsSource.setAttribute("class", "news-source");
+                            newsSource.innerText = news.news_source.title;
+
+                            let headline = document.createElement("span");
+                            headline.setAttribute("class", "headline");
+                            if(news.title.length > 65) {
+                                headline.innerText = news.title.substring(0, 65) + '...';
+                            } else {
+                                headline.innerText = news.title;
+                            }
+
+                            let timestamp = document.createElement("p");
+                            timestamp.setAttribute("class", "timestamp");
+                            timestamp.innerText = "15 hours ago";
+
+                            thumbnailContainer.append(thumbnail);
+                            card.append(thumbnailContainer);
+
+                            source.append(newsFavIcon);
+                            source.append(newsSource);
+                            textContainer.append(source);
+
+                            textContainer.append(headline);
+                            textContainer.append(timestamp);
+                            card.append(textContainer);
+
+                            covidNewsContainer.append(card);
+                        })
+                    }
                 }).catch(err => {
-                   console.log(err)
+                    console.log(err)
                 })
-            });
         </script>
     </div>
 {% endblock %}

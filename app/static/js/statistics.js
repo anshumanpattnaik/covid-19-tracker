@@ -231,6 +231,15 @@ function addCountryStatistics(data) {
         }
 
         // COVID News
+        fetch('/covid-news')
+            .then(res => res.json())
+            .then(res => {
+                console.log(JSON.stringify(res));
+            }).catch(err => {
+                console.log(err)
+            })
+
+        // fly to coordinate
         flyToCoordinate(data);
     });
 }
