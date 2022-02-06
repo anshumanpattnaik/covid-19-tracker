@@ -301,7 +301,6 @@ a:hover {
     margin-left: 40em;
 }
 .map-theme-container {
-    /*width: 20em;*/
     height: 5em;
     display: flex;
     align-items: center;
@@ -310,7 +309,6 @@ a:hover {
     bottom: 0;
     margin-bottom: 1.5em;
     margin-right: 2em;
-    /*background-color: #e63946;*/
 }
 .style-container {
     width: 4em;
@@ -319,11 +317,44 @@ a:hover {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    /*border: 3px solid #004e89;*/
 }
 .style-thumb {
-    width: 100%;
-    height: 100%;
+    width: 4em;
+    height: 4em;
+    object-fit: cover;
+}
+.github-container {
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 2em;
+    margin-right: 3em;
+}
+.github {
+    width: 8em;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5em;
+    transition: .3s;
+    background-color: var(--white);
+}
+.github:hover {
+    cursor: pointer;
+    background-color: var(--1d1d1d);
+}
+.github > .code-label {
+    font-family: SpartanBold, serif;
+    font-size: 0.8em;
+    color: var(--1d1d1d);
+}
+.github:hover .code-label {
+    color: #FFFFFF;
 }
 .mobile-nav-container {
     display: none;
@@ -346,7 +377,7 @@ a:hover {
         width: 100vw;
         height: 7.5vh;
         display: grid;
-        grid-template-columns: 33% 33% 33%;
+        grid-template-columns: 50% 50%;
         position: fixed;
         bottom: 0;
         z-index: 999;
@@ -368,8 +399,29 @@ a:hover {
         color: #5f6673;
         margin: 0.5em;
     }
-    .covid-news-container {
+    .map-theme-container {
         width: 100vw;
-        margin-left: 0;
+        height: 5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin-bottom: 5em;
+        margin-right: 0;
+    }
+    .style-container {
+        width: 3.5em;
+        height: 3.5em;
+    }
+    .style-thumb {
+        width: 3.5em;
+        height: 3.5em;
+    }
+    .github-container {
+        width: 100vw;
+        margin-right: 0;
     }
 }

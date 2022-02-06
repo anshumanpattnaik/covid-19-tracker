@@ -5,6 +5,7 @@ let map;
 let popup;
 const MAP_ID = 'covidStatistics'
 let DEFAULT_STYLE = 'light-v10';
+let defaultSelection = true;
 
 let mapStyles = [
     {
@@ -113,9 +114,13 @@ function mapStyleMenu() {
             mapThemeContainer.append(container);
         }
 
+        if(defaultSelection) {
+            document.querySelector("#style-container-"+mapStyles[0].layer_id).style.border = "3px solid #004e89";
+        }
         container.addEventListener("click", function () {
+            defaultSelection = false;
             document.querySelectorAll(".style-container").forEach(item => item.style.border = "none");
-            document.querySelector("#style-container-"+mapStyles[i].layer_id).style.border = "2px solid #004e89";
+            document.querySelector("#style-container-"+mapStyles[i].layer_id).style.border = "3px solid #004e89";
 
             DEFAULT_STYLE = mapStyles[i].layer_id;
             map.setStyle('mapbox://styles/mapbox/' + DEFAULT_STYLE);

@@ -6,10 +6,6 @@ let menu = [
     {
         "label": "Map",
         "icon": "map"
-    },
-    {
-        "label": "About",
-        "icon": "info"
     }
 ]
 
@@ -63,11 +59,6 @@ for(let i=0; i<menu.length; i++) {
         if(menu[i].label === "Map") {
             countryContainer.style.display = "none";
             mapContainer.style.display = "block";
-        }
-        if(menu[i].label === "About") {
-            alert("About");
-            // countryContainer.style.display = "none";
-            // map.style.display = "none";
         }
     });
 }
