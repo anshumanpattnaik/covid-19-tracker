@@ -20,7 +20,7 @@
             <div class="timeline">
                 <span class="label">Timeline: </span>
                 <select id="date-selector">
-                    {% for date in all_dates %}
+                    {% for date in all_dates reversed %}
                         <option>{{ date }}</option>
                     {% endfor %}
                 </select>
