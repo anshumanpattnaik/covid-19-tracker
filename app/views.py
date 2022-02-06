@@ -1,9 +1,4 @@
-import requests
-from bs4 import BeautifulSoup
 from django.shortcuts import render
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from app.core.clients.StatisticsClient import StatisticsClient
 from app.core.utils import Utils

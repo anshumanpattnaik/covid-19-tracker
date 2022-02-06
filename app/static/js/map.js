@@ -34,7 +34,7 @@ function createMap() {
     mapboxgl.accessToken = ACCESS_TOKEN;
     return (window.map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/'+DEFAULT_STYLE,
+        style: 'mapbox://styles/mapbox/'+defaultMapStyle,
         center: [-73.93324, 40.80877],
         zoom: 2
     }));
