@@ -10,7 +10,7 @@ let geoJSON = {}
 renderStatistics(totalCases, statistics);
 
 /**
- * This function renders all countries statistics
+ * This function is used to render all countries' statistics.
  */
 function renderStatistics(totalCases, statistics) {
     statisticsContainer.innerHTML = ``;
@@ -83,7 +83,7 @@ searchInput.addEventListener('input', function (e) {
 });
 
 /**
- * This function filters covid statistics by country name.
+ * This function is used to filter covid statistics by country name.
  * @param name is country name
  * @returns filtered statistics list.
  */
@@ -94,7 +94,7 @@ function filterStatistics(name) {
 }
 
 /**
- * This function returns custom popup view HTML design that renders over the map.
+ * This function is used to return custom popup view HTML design that renders over the map.
  * @param name is country name
  * @param flag is country flag
  * @param confirmed is confirmed cases
@@ -126,7 +126,7 @@ function renderPopupView(name, flag, confirmed, deaths) {
 }
 
 /**
- * This function adds list of countries with the statistics to the parent container.
+ * This function is used to add list of countries with the statistics to the parent container.
  * @param data contains country list with the covid statistics
  */
 function addCountryStatistics(data) {

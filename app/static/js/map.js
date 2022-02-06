@@ -1,12 +1,14 @@
 'use strict'
 
+/* Constants */
+const MAP_ID = 'covidStatistics'
+const ACCESS_TOKEN = 'pk.eyJ1IjoiaGFja2JvdG9uZSIsImEiOiJjanVvdHVkdWUzNmt1NDNwZ24zdGV5Nzl1In0.81ERUqNnNquLDLCB4IRLnA';
+
 let mapThemeContainer = document.querySelector('.map-theme-container');
 let map;
 let popup;
-const MAP_ID = 'covidStatistics'
-let DEFAULT_STYLE = 'light-v10';
 let defaultSelection = true;
-
+let defaultMapStyle = 'light-v10';
 let mapStyles = [
     {
         "layer_id": "light-v10",
@@ -21,10 +23,15 @@ let mapStyles = [
         "image": "/static/images/outdoors-v11.png"
     }
 ]
+
 loadMap();
 
+/**
+ * This function creates the map with the default coordinates
+ * @returns map object
+ */
 function createMap() {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiaGFja2JvdG9uZSIsImEiOiJjanVvdHVkdWUzNmt1NDNwZ24zdGV5Nzl1In0.81ERUqNnNquLDLCB4IRLnA';
+    mapboxgl.accessToken = ACCESS_TOKEN;
     return (window.map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/'+DEFAULT_STYLE,
@@ -33,6 +40,10 @@ function createMap() {
     }));
 }
 
+/**
+ * This function creates popup which displays over the map
+ * @returns popup object
+ */
 function createPopup() {
     return new mapboxgl.Popup({
         closeButton: false,
@@ -40,6 +51,9 @@ function createPopup() {
     });
 }
 
+/**
+ * This function loads the map using source/layer
+ */
 function loadMap() {
     map = createMap();
     popup = createPopup();
@@ -98,6 +112,9 @@ function loadMap() {
     mapStyleMenu();
 }
 
+/**
+ * This function is used to provide different styling options which can be applied to the map.
+ */
 function mapStyleMenu() {
     for(let i=0; i < mapStyles.length; i++) {
         let container = document.createElement("div");
@@ -122,13 +139,17 @@ function mapStyleMenu() {
             document.querySelectorAll(".style-container").forEach(item => item.style.border = "none");
             document.querySelector("#style-container-"+mapStyles[i].layer_id).style.border = "3px solid #004e89";
 
-            DEFAULT_STYLE = mapStyles[i].layer_id;
-            map.setStyle('mapbox://styles/mapbox/' + DEFAULT_STYLE);
+            defaultMapStyle = mapStyles[i].layer_id;
+            map.setStyle('mapbox://styles/mapbox/' + defaultMapStyle);
             loadMap();
         })
     }
 }
 
+/**
+ * This function is used to fly to the destination coordinate using the selected data.
+ * @param data is country individual coordinates/statistics
+ */
 function flyToCoordinate(data) {
     /**
      * The below logic is handled for mobile fly to co-ordinate / Map menu selection

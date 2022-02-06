@@ -1,3 +1,7 @@
+let countryContainer = document.querySelector('.country-container');
+let mapContainer = document.querySelector("#map");
+let mobileNavContainer = document.querySelector('.mobile-nav-container');
+
 let menu = [
     {
         "label": "Home",
@@ -9,12 +13,10 @@ let menu = [
     }
 ]
 
-let countryContainer = document.querySelector('.country-container');
-let mapContainer = document.querySelector("#map");
-let mobileNavContainer = document.querySelector('.mobile-nav-container');
-
+/**
+ * This function is used to reset the menu selection.
+ */
 function resetMenuSelection() {
-    // reset the selection
     document.querySelectorAll(".menu-label").forEach(item => item.style.color = "#5f6673");
     document.querySelectorAll(".menu-label").forEach(item => item.style.fontWeight = "normal");
     document.querySelectorAll(".material-icons").forEach(item => item.style.color = "#5f6673");

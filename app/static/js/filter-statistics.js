@@ -1,3 +1,6 @@
+/**
+ * The below listener handles timeline event to load covid statistics for different time-periods.
+ */
 let dateSelector = document.getElementById("date-selector");
 dateSelector.addEventListener("change", function() {
     let query = JSON.stringify(graphqlQuery);
