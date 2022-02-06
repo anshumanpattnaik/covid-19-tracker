@@ -1,3 +1,5 @@
+import os
+
 import requests
 
 from .response import Response
@@ -5,7 +7,7 @@ from .response import Response
 
 class HTTPClient:
 
-    def __init__(self, url=f'http://192.168.29.113:8000'):
+    def __init__(self, url=f'http://{os.environ.get("DJANGO_ALLOWED_HOSTS")}:8000'):
         self.url = url
 
     def __enter__(self):
