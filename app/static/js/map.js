@@ -95,21 +95,39 @@ function loadMap() {
         map.resize();
     });
     map.on("mouseenter", MAP_ID, function(e) {
-        map.getCanvas().style.cursor = "pointer";
-
-        let coordinates = e.features[0].geometry.coordinates.slice();
-        let popup_view = e.features[0].properties.popup_view;
-
-        popup
-            .setLngLat(coordinates)
-            .setHTML(popup_view)
-            .addTo(map);
+        setPopupCoordinate(e);
     });
     map.on("mouseleave", MAP_ID, function() {
-        map.getCanvas().style.cursor = "";
-        popup.remove();
+        removePopup();
+    });
+    map.on("click", MAP_ID, function(e) {
+        removePopup();
+        setPopupCoordinate(e);
     });
     mapStyleMenu();
+}
+
+/**
+ * This function is used to set the coordinates & HTML view to create the popup
+ * @param e is event handler
+ */
+function setPopupCoordinate(e) {
+    map.getCanvas().style.cursor = "pointer";
+
+    let coordinates = e.features[0].geometry.coordinates.slice();
+    let popup_view = e.features[0].properties.popup_view;
+    popup
+        .setLngLat(coordinates)
+        .setHTML(popup_view)
+        .addTo(map);
+}
+
+/**
+ * This function is used to remove the popup from map.
+ */
+function removePopup() {
+    map.getCanvas().style.cursor = "";
+    popup.remove();
 }
 
 /**
