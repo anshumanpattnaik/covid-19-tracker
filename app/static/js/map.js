@@ -150,7 +150,7 @@ function flyToCoordinate(data) {
     // remove existing popup
     popup.remove();
 
-    let ZOOM_LEVEL = 4;
+    let ZOOM_LEVEL = 7;
     let COUNTRY_BOUNDARIES = 'country-boundaries';
 
     map.flyTo({
