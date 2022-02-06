@@ -1,15 +1,32 @@
 'use strict'
 
+let mapThemeContainer = document.querySelector('.map-theme-container');
 let map;
 let popup;
+const MAP_ID = 'covidStatistics'
+let DEFAULT_STYLE = 'light-v10';
 
+let mapStyles = [
+    {
+        "layer_id": "light-v10",
+        "image": "/static/images/light-v10.png"
+    },
+    {
+        "layer_id": "dark-v10",
+        "image": "/static/images/dark-v10.png"
+    },
+    {
+        "layer_id": "outdoors-v11",
+        "image": "/static/images/outdoors-v11.png"
+    }
+]
 loadMap();
 
 function createMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiaGFja2JvdG9uZSIsImEiOiJjanVvdHVkdWUzNmt1NDNwZ24zdGV5Nzl1In0.81ERUqNnNquLDLCB4IRLnA';
     return (window.map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/light-v10',
+        style: 'mapbox://styles/mapbox/'+DEFAULT_STYLE,
         center: [-73.93324, 40.80877],
         zoom: 2
     }));
@@ -23,7 +40,6 @@ function createPopup() {
 }
 
 function loadMap() {
-    const MAP_ID = 'covidStatistics'
     map = createMap();
     popup = createPopup();
     map.on("load", function() {
@@ -78,6 +94,34 @@ function loadMap() {
         map.getCanvas().style.cursor = "";
         popup.remove();
     });
+    mapStyleMenu();
+}
+
+function mapStyleMenu() {
+    for(let i=0; i < mapStyles.length; i++) {
+        let container = document.createElement("div");
+        container.setAttribute("class", "style-container");
+        container.setAttribute("id", "style-container-"+mapStyles[i].layer_id);
+
+        let styleImage = document.createElement("img");
+        styleImage.setAttribute("class", "style-thumb");
+        styleImage.src = mapStyles[i].image;
+
+        let styleContainer = document.querySelector('#style-container-'+mapStyles[i].layer_id);
+        if(styleContainer == null) {
+            container.append(styleImage);
+            mapThemeContainer.append(container);
+        }
+
+        container.addEventListener("click", function () {
+            document.querySelectorAll(".style-container").forEach(item => item.style.border = "none");
+            document.querySelector("#style-container-"+mapStyles[i].layer_id).style.border = "2px solid #004e89";
+
+            DEFAULT_STYLE = mapStyles[i].layer_id;
+            map.setStyle('mapbox://styles/mapbox/' + DEFAULT_STYLE);
+            loadMap();
+        })
+    }
 }
 
 function flyToCoordinate(data) {
