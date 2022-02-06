@@ -47,7 +47,7 @@
     border: 0.5px solid #2c3136;
 }
 .map-popup-container > .flag-container {
-    width: 17em;
+    width: 100%;
     height: 10em;
     display: flex;
     align-items: center;
@@ -64,8 +64,9 @@
     justify-content: center;
 }
 .map-country-container > .country {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #FFFFFF;
+    text-align: center;
     margin-left: 0.5em;
 }
 .map-container-divider {
