@@ -52,21 +52,6 @@
             <br/>
         </div>
         <div id="map"></div>
-        <div class="covid-news-container">
-{#            <div class="card">#}
-{#                <img src="https://lh3.googleusercontent.com/proxy/z7IMpkuWKAEhI2EJySw6V8-08ulOauD8v9PV-IDQAeXbaH8ltQKyyw-5lRR7ein35AV6Pshdb6YABVlthdJp3YsJV4ftR_-ZbkgxtLnMQB5a10f-3RhPrJi6LLs0ZYs36uhjR0IuUNuka7v9ZOjfAebdWA"#}
-{#                     class="thumbnail"/>#}
-{#                <div class="text-container">#}
-{#                    <div class="source">#}
-{#                        <img src="https://encrypted-tbn2.gstatic.com/faviconV2?url=https://apnews.com&client=NEWS_360&size=96&type=FAVICON&fallback_opts=TYPE,SIZE,URL"#}
-{#                             class="favicon">#}
-{#                        <span class="news-source">Associated Press</span>#}
-{#                    </div>#}
-{#                    <span class="headline">Live updates from the 2022 Beijing Olympics</span>#}
-{#                    <p class="timestamp">15 hours ago</p>#}
-{#                </div>#}
-{#            </div>#}
-        </div>
         <div class="mobile-nav-container"></div>
         <script>
             let totalCases = {{ total_cases|safe }};
@@ -77,66 +62,5 @@
         <script src="{% static 'js/statistics.js' %}"></script>
         <script src="{% static 'js/map.js' %}"></script>
         <script src="{% static 'js/filter-statistics.js' %}"></script>
-        <script>
-            let covidNewsContainer = document.querySelector(".covid-news-container");
-            fetch('/covid-news')
-                .then(res => res.json())
-                .then(res => {
-                    if(res.status !== undefined) {
-                        res.status.top_news.map(news => {
-                            let card = document.createElement("div");
-                            card.setAttribute("class", "card");
-
-                            let thumbnailContainer = document.createElement("div");
-                            thumbnailContainer.setAttribute("class", "thumbnail-container");
-
-                            let thumbnail = document.createElement("img");
-                            thumbnail.setAttribute("class", "thumbnail");
-                            thumbnail.src = news.thumbnail;
-
-                            let textContainer = document.createElement("div");
-                            textContainer.setAttribute("class", "text-container");
-
-                            let source = document.createElement("div");
-                            source.setAttribute("class", "source");
-
-                            let newsFavIcon = document.createElement("img");
-                            newsFavIcon.setAttribute("class", "favicon");
-                            newsFavIcon.src = news.news_source.favicon;
-
-                            let newsSource = document.createElement("span");
-                            newsSource.setAttribute("class", "news-source");
-                            newsSource.innerText = news.news_source.title;
-
-                            let headline = document.createElement("span");
-                            headline.setAttribute("class", "headline");
-                            if(news.title.length > 65) {
-                                headline.innerText = news.title.substring(0, 65) + '...';
-                            } else {
-                                headline.innerText = news.title;
-                            }
-
-                            let timestamp = document.createElement("p");
-                            timestamp.setAttribute("class", "timestamp");
-                            timestamp.innerText = "15 hours ago";
-
-                            thumbnailContainer.append(thumbnail);
-                            card.append(thumbnailContainer);
-
-                            source.append(newsFavIcon);
-                            source.append(newsSource);
-                            textContainer.append(source);
-
-                            textContainer.append(headline);
-                            textContainer.append(timestamp);
-                            card.append(textContainer);
-
-                            covidNewsContainer.append(card);
-                        })
-                    }
-                }).catch(err => {
-                    console.log(err)
-                })
-        </script>
     </div>
 {% endblock %}
