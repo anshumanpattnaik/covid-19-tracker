@@ -2,14 +2,6 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 
-class DateConfig(models.Model):
-    date = models.CharField(max_length=100)
-
-    class Meta:
-        managed = True
-        db_table = 'date_config'
-
-
 class CovidStatistics(models.Model):
     area = models.CharField(max_length=500, blank=True)
     confirmed = models.IntegerField(default=0)
