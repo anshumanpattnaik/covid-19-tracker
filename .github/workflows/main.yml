@@ -1,0 +1,51 @@
+name: Continuous Integration and Delivery
+on: [push]
+jobs:
+  build:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v1
+      - name: Add environment variables to .env
+        run: |
+          echo DEBUG=${{ secrets.DEBUG }} >> .env
+          echo DJANGO_SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}" >> .env
+          echo DJANGO_ALLOWED_HOSTS=${{ secrets.DJANGO_ALLOWED_HOSTS }} >> .env
+          echo DATABASE_ENGINE=django.db.backends.postgresql >> .env
+          echo DATABASE_NAME=${{ secrets.DATABASE_NAME }} >> .env
+          echo DATABASE_USER=${{ secrets.DATABASE_USER }} >> .env
+          echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .env
+          echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> .env
+          echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> .env
+      - name: ssh-agent
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
+      - name: Build and Deploy
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          scp  -o StrictHostKeyChecking=no -r ./.env  root@${{ secrets.VPS_IP_ADDRESS }}:/opt/covid19tracker.info/covid-19-tracker
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.VPS_IP_ADDRESS }} << 'ENDSSH'
+            cd /opt/covid19tracker.info/covid-19-tracker
+            git pull origin main --force
+            [ -f venv] || python3 -m venv venv
+            source ./venv/bin/activate
+            pip3 install --upgrade pip
+            pip3 install wheel
+            pip3 install -r requirements.txt
+            bash ./build/migrations.sh
+            [ -f /etc/nginx/sites-available/covid19tracker.info ] || mv build/covid19tracker.info /etc/nginx/sites-available/
+            [ -f /etc/supervisor/conf.d/covid19tracker.info.conf ] || mv build/covid19tracker.info.conf /etc/supervisor/conf.d/
+            chmod +x ./deploy/start_gunicorn
+            chmod u+x ./terminate.sh
+            sudo service supervisor restart
+            [ -f /etc/nginx/sites-enabled/covid19tracker.info ] || sudo ln -s /etc/nginx/sites-available/covid19tracker.info /etc/nginx/sites-enabled/covid19tracker.info
+            sudo nginx -t && sudo service nginx reload
+          ENDSSH
