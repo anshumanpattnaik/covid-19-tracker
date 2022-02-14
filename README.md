@@ -15,7 +15,7 @@ https://covid19tracker.info
 
 TechStack behind covid19tracker website is (Django, Postgresql & Mapbox) and to collect daily results around the world admin panel crawls & 
 parses (JHU CSSE) GitHub page using [beautifulsoup4](https://pypi.org/project/beautifulsoup4/) and parses the CSV file using 
-[PapaParse](https://www.papaparse.com/) javascript API and converts it JSON data format and stores the results into the db using ORM data models. 
+[PapaParse](https://www.papaparse.com/) javascript API and converts it to JSON data format and stores the results into the db using ORM data models. 
 To populate the statistics of each country around the world over the map it uses [Mapbox](https://www.mapbox.com/) Javascript API and follows geoJSON data 
 format to represent the geographic location of each country.  
 
