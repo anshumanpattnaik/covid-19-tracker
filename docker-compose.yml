@@ -18,7 +18,7 @@ services:
     image: postgres:13.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file:
+    environment:
       - POSTGRES_USER=covid_admin
       - POSTGRES_PASSWORD=covid_admin
       - POSTGRES_DB=covid19

@@ -5,6 +5,7 @@ import django
 import requests
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "covid19.settings")
+os.environ.setdefault("ENV_FILE", ".env.dev")
 django.setup()
 
 BASE_URL = f'http://{os.getenv("DJANGO_ALLOWED_HOSTS")}:8000'
