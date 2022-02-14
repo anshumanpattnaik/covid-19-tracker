@@ -106,6 +106,31 @@ html, body {
     height: 100vh;
     display: flex;
 }
+.loading-container {
+    display: none;
+}
+.loading-overlay {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 999;
+    opacity: 0.8;
+    background-color: #1d1d1d;
+}
+.loading-message-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 9999;
+}
+.loading-message-container > .loading {
+    font-family: SpartanBold, serif;
+    font-size: 1em;
+    color: var(--white);
+}
 .country-container {
     width: 28em;
     height: auto;
@@ -381,7 +406,7 @@ a:hover {
         grid-template-columns: 50% 50%;
         position: fixed;
         bottom: 0;
-        z-index: 999;
+        z-index: 99;
         border-top: 1px solid var(--2c3136);
         background-color: var(--1d1d1d);
     }

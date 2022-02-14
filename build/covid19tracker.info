@@ -1,9 +1,9 @@
-upstream covid19tracker_info_server {
+upstream covid19_tracker_info_server {
     server unix:/opt/covid19tracker.info/covid-19-tracker/run/gunicorn.sock fail_timeout=0;
 }
 server {
     listen 80;
-    server_name covid19tracker.info;
+    server_name covid19tracker.info www.covid19tracker.info;
 
     client_max_body_size 4G;
 
@@ -19,7 +19,7 @@ server {
         proxy_set_header Host $http_host;
         proxy_redirect off;
         if (!-f $request_filename) {
-            proxy_pass http://covid19tracker_info_server;
+            proxy_pass http://covid19_tracker_info_server;
             break;
         }
     }

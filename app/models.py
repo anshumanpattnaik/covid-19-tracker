@@ -30,7 +30,7 @@ class Country(models.Model):
     code = models.CharField(max_length=500)
     flag = models.TextField(unique=True)
     coordinates = ArrayField(base_field=models.FloatField(), default=list)
-    statistics = models.ManyToManyField(CovidStatistics)
+    statistics = models.ManyToManyField(CovidStatistics, related_name="covid_statistics")
 
     class Meta:
         managed = True

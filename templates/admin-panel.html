@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 - Admin Panel</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/dataTables.bootstrap.min.css' %}">
+
+    <script src="{% static 'js/papaparse.min.js' %}"></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>COVID-19 ADMIN Panel</h1>
+    </div>
+    <div class="table-container">
+        <table id="table" class="table table-striped table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Daily Reports</th>
+              <th scope="col">Sync Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for csv in csv_list %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td><a href="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{{ csv.csv_file }}.csv" target="_blank">{{ csv.csv_file }}.csv</a></td>
+                  <td><span id="sync-status-{{ csv.csv_file }}" class="sync-status">{{ csv.sync_status }}</span></td>
+                  <td><button type="button" {% if 'Synced' == csv.sync_status %} disabled {% endif %} class="btn btn-primary" onclick="parseCSV(`{{ csv.csv_file }}`)">Sync</button></td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    <script src="{% static 'js/bootstrap/jquery-3.5.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/dataTables.bootstrap.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable();
+        });
+        let csv_file_list = {{ csv_list|safe }};
+
+        function parseCSV(csv) {
+            let syncStatus = document.getElementById('sync-status-'+csv);
+            syncStatus.innerHTML = "In Progress...";
+            Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/"+csv+".csv", {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    let totalConfirmed = 0;
+                    let totalDeaths = 0;
+                    let totalRecovered = 0;
+
+                    results.data.map(results => {
+                        if(!isNaN(parseInt(results.Confirmed))) {
+                            totalConfirmed += parseInt(results.Confirmed);
+                        }
+                        if(!isNaN(parseInt(results.Deaths))) {
+                            totalDeaths += parseInt(results.Deaths);
+                        }
+                        if(!isNaN(parseInt(results.Recovered))) {
+                            totalRecovered += parseInt(results.Recovered);
+                        }
+                    })
+
+                    let countries = []
+                    for(let i=0; i<results.data.length; i++) {
+                        if(results.data[i].Country_Region !== undefined && results.data[i].Country_Region.length > 1) {
+                            countries.push({
+                                "country": {
+                                    "name": results.data[i].Country_Region,
+                                    "confirmed": (!isNaN(parseInt(results.data[i].Confirmed)) ? parseInt(results.data[i].Confirmed): 0),
+                                    "deaths": (!isNaN(parseInt(results.data[i].Deaths)) ? parseInt(results.data[i].Deaths): 0),
+                                    "recovered": (!isNaN(parseInt(results.data[i].Recovered)) ? parseInt(results.data[i].Recovered): 0)
+                                }
+                            })
+                        }
+                    }
+                    let statistics = {
+                        "total_confirmed": totalConfirmed,
+                        "total_deaths": totalDeaths,
+                        "total_recovered": totalRecovered,
+                        "date": csv,
+                        "countries": countries
+                    }
+
+                    fetch('/admin/add-statistics', {
+                      method: 'POST',
+                      headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(statistics)
+                    }).then(res => res.json())
+                      .then(res =>{
+                            syncStatus.innerText = "Completed";
+                            alert(res.status)
+                      });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

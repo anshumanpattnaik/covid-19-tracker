@@ -16,15 +16,15 @@ function renderStatistics(totalCases, statistics) {
     statisticsContainer.innerHTML = ``;
 
     if(totalCases !== undefined && statistics !== undefined) {
-        // Sorting statistics from higher confirmed cases to lower confirmed cases
-        if(statistics[0].statistics.edges.length >= 1) {
-            statistics.sort((a, b) => (a.statistics.edges.length >= 1 && b.statistics.edges.length >= 1) &&
-                (a.statistics.edges[0].node.confirmed === b.statistics.edges[0].node.confirmed ? 0 :
-                    a.statistics.edges[0].node.confirmed < b.statistics.edges[0].node.confirmed || -1));
+        // Sorting statistics from higher confirmed cases to lower cases
+        if(statistics[0].statistics.length >= 1) {
+            statistics.sort((a, b) => (a.statistics.length >= 1 && b.statistics.length >= 1) &&
+                (a.statistics[0].confirmed === b.statistics[0].confirmed ? 0 :
+                    a.statistics[0].confirmed < b.statistics[0].confirmed || -1));
         }
         let featuresData = []
         statistics.forEach(data => {
-            if(data.statistics.edges.length >= 1) {
+            if(data.statistics.length >= 1) {
                 featuresData.push({
                     type: "Feature",
                     geometry: {
@@ -32,11 +32,11 @@ function renderStatistics(totalCases, statistics) {
                         coordinates: data.coordinates
                     },
                     properties: {
-                        popup_view: renderPopupView(data.name, data.flag, data.statistics.edges[0].node.confirmed,
-                                                    data.statistics.edges[0].node.deaths),
-                        confirmed: data.statistics.edges[0].node.confirmed,
-                        deaths: data.statistics.edges[0].node.deaths,
-                        recovered: data.statistics.edges[0].node.recovered
+                        popup_view: renderPopupView(data.name, data.flag, data.statistics[0].confirmed,
+                                                    data.statistics[0].deaths),
+                        confirmed: data.statistics[0].confirmed,
+                        deaths: data.statistics[0].deaths,
+                        recovered: data.statistics[0].recovered
                     }
                 });
                 addCountryStatistics(data);
@@ -46,12 +46,12 @@ function renderStatistics(totalCases, statistics) {
             type: "FeatureCollection",
             features: featuresData
         }
-        headerTotalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
-        totalConfirmed.innerText = totalCases.totalConfirmed.toLocaleString();
-        totalDeaths.innerText = totalCases.totalDeaths.toLocaleString();
-        totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
-        if(totalCases.totalRecovered >= 1) {
-            totalRecovered.innerText = totalCases.totalRecovered.toLocaleString();
+        headerTotalConfirmed.innerText = totalCases.total_confirmed.toLocaleString();
+        totalConfirmed.innerText = totalCases.total_confirmed.toLocaleString();
+        totalDeaths.innerText = totalCases.total_deaths.toLocaleString();
+        totalRecovered.innerText = totalCases.total_recovered.toLocaleString();
+        if(totalCases.total_recovered >= 1) {
+            totalRecovered.innerText = totalCases.total_recovered.toLocaleString();
         } else {
             totalRecovered.innerText = "N/A";
         }
@@ -73,7 +73,7 @@ searchInput.addEventListener('input', function (e) {
             nrfContainer.style.display = "none";
         }
         filteredValues.forEach(value => {
-            if(value.statistics.edges.length >= 1) {
+            if(value.statistics.length >= 1) {
                 addCountryStatistics(value);
             }
         });
@@ -153,7 +153,7 @@ function addCountryStatistics(data) {
 
     let confirmedCount = document.createElement("span");
     confirmedCount.setAttribute("class", "count");
-    confirmedCount.innerText = data.statistics.edges[0].node.confirmed.toLocaleString();
+    confirmedCount.innerText = data.statistics[0].confirmed.toLocaleString();
 
     let confirmedLabel = document.createElement("span");
     confirmedLabel.setAttribute("class", "label");
@@ -168,7 +168,7 @@ function addCountryStatistics(data) {
 
     let deathsCount = document.createElement("span");
     deathsCount.setAttribute("class", "count");
-    deathsCount.innerText = data.statistics.edges[0].node.deaths.toLocaleString();
+    deathsCount.innerText = data.statistics[0].deaths.toLocaleString();
 
     let deathsLabel = document.createElement("span");
     deathsLabel.setAttribute("class", "label");
@@ -183,8 +183,8 @@ function addCountryStatistics(data) {
 
     let recoveredCount = document.createElement("span");
     recoveredCount.setAttribute("class", "count");
-    if(data.statistics.edges[0].node.recovered >= 1){
-        recoveredCount.innerText = data.statistics.edges[0].node.recovered.toLocaleString();
+    if(data.statistics[0].recovered >= 1){
+        recoveredCount.innerText = data.statistics[0].recovered.toLocaleString();
     } else {
         recoveredCount.innerText = "N/A";
     }

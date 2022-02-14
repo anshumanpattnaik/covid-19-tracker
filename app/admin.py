@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from app.models import CovidStatistics, TotalCases, Country
+
+admin.site.register(CovidStatistics)
+admin.site.register(TotalCases)
+admin.site.register(Country)

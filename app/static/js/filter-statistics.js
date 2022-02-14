@@ -2,22 +2,17 @@
  * The below listener handles timeline event to load covid statistics for different time-periods.
  */
 let dateSelector = document.getElementById("date-selector");
+let loadingContainer = document.querySelector(".loading-container");
 dateSelector.addEventListener("change", function() {
-    let query = JSON.stringify(graphqlQuery);
-    let date = query.match(/\d{2}([\/.-])\d{2}\1\d{4}/g);
-    query = query.replaceAll(date[0], dateSelector.value);
-    fetch('/graphql', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: query
-    }).then(res => res.json())
+    loadingContainer.style.display = "block";
+    fetch(`/statistics/${dateSelector.value}`)
+        .then(res => res.json())
         .then(res => {
-            renderStatistics(res.data.totalCases.edges[0].node, res.data.countryStatistics);
+            renderStatistics(res.total_cases, res.country_statistics);
             loadMap();
+            loadingContainer.style.display = "none";
         }).catch(err => {
-            console.log(err)
+            alert("Something went wrong");
+            loadingContainer.style.display = "none";
         })
 });

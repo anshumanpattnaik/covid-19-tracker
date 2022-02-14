@@ -19,6 +19,8 @@ jobs:
           echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .env
           echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> .env
           echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> .env
+          echo ADMIN_PANEL_ENABLED=${{ secrets.ADMIN_PANEL_ENABLED }} >> .env
+          echo MAP_BOX_ACCESS_TOKEN=${{ secrets.MAP_BOX_ACCESS_TOKEN }} >> .env
       - name: ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -31,21 +33,17 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          scp  -o StrictHostKeyChecking=no -r ./.env  root@${{ secrets.VPS_IP_ADDRESS }}:/opt/covid19tracker.info/covid-19-tracker
+          scp  -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.VPS_IP_ADDRESS }}:/opt/covid19tracker.info/covid-19-tracker
           ssh -o StrictHostKeyChecking=no root@${{ secrets.VPS_IP_ADDRESS }} << 'ENDSSH'
             cd /opt/covid19tracker.info/covid-19-tracker
             git pull origin main --force
-            [ -f venv] || python3 -m venv venv
             source ./venv/bin/activate
             pip3 install --upgrade pip
             pip3 install wheel
             pip3 install -r requirements.txt
             bash ./build/migrations.sh
-            [ -f /etc/nginx/sites-available/covid19tracker.info ] || mv build/covid19tracker.info /etc/nginx/sites-available/
-            [ -f /etc/supervisor/conf.d/covid19tracker.info.conf ] || mv build/covid19tracker.info.conf /etc/supervisor/conf.d/
             chmod +x ./deploy/start_gunicorn
             chmod u+x ./terminate.sh
             sudo service supervisor restart
-            [ -f /etc/nginx/sites-enabled/covid19tracker.info ] || sudo ln -s /etc/nginx/sites-available/covid19tracker.info /etc/nginx/sites-enabled/covid19tracker.info
             sudo nginx -t && sudo service nginx reload
           ENDSSH

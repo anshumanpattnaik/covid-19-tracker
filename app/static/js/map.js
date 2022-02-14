@@ -2,7 +2,6 @@
 
 /* Constants */
 const MAP_ID = 'covidStatistics'
-const ACCESS_TOKEN = 'pk.eyJ1IjoiaGFja2JvdG9uZSIsImEiOiJjanVvdHVkdWUzNmt1NDNwZ24zdGV5Nzl1In0.81ERUqNnNquLDLCB4IRLnA';
 
 let mapThemeContainer = document.querySelector('.map-theme-container');
 let map;
@@ -31,7 +30,7 @@ loadMap();
  * @returns map object
  */
 function createMap() {
-    mapboxgl.accessToken = ACCESS_TOKEN;
+    mapboxgl.accessToken = mapBoxAccessToken;
     return (window.map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/'+defaultMapStyle,
@@ -228,7 +227,7 @@ function flyToCoordinate(data) {
         const currentZoomOffset = map.getZoom();
         if (currentZoomOffset === ZOOM_LEVEL) {
             let coordinates = data.coordinates.slice();
-            let popup_view = renderPopupView(data.name, data.flag, data.statistics.edges[0].node.confirmed, data.statistics.edges[0].node.deaths);
+            let popup_view = renderPopupView(data.name, data.flag, data.statistics[0].confirmed, data.statistics[0].deaths);
             popup
                 .setLngLat(coordinates)
                 .setHTML(popup_view)

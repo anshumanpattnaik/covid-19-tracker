@@ -1,0 +1,51 @@
+@font-face {
+    font-family: RighteousRegular;
+    src: url(../fonts/Righteous-Regular.ttf);
+}
+@font-face {
+    font-family: SpartanRegular;
+    src: url(../fonts/Spartan-Regular.ttf);
+}
+@font-face {
+    font-family: SpartanBold;
+    src: url(../fonts/Spartan-Bold.ttf);
+}
+:root {
+    --black: #000000;
+    --white: #FFFFFF;
+    --f8f9fa: #f8f9fa;
+    --212529: #212529;
+    --3d5a80: #3d5a80;
+    --003566: #003566;
+    --407ba7: #407ba7;
+    --004e89: #004e89;
+    --1a659e: #1a659e;
+    --e63946: #e63946;
+    --343a40: #343a40;
+    --1d1d1d: #1d1d1d;
+    --2d3237: #2d3237;
+    --2c3136: #2c3136;
+}
+
+html, body {
+    margin: 0;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-color: var(--white);
+}
+.container {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 3em;
+}
+h1 {
+    font-family: SpartanBold, serif;
+    font-size: 1.8em;
+    color: var(--black);
+}
+.table-container {
+    margin-top: 3em;
+    margin-left: 10em;
+    margin-right: 10em;
+}

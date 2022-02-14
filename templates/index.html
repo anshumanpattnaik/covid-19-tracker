@@ -4,6 +4,12 @@
 
 {% block content %}
     <div class="root-container">
+        <div class="loading-container">
+            <div class="loading-overlay"></div>
+            <div class="loading-message-container">
+                <span class="loading">Loading... Please Wait</span>
+            </div>
+        </div>
         <div class="country-container">
             <p class="title">Coronavirus (COVID-19) Tracker</p>
             <p class="description">
@@ -64,7 +70,7 @@
         <script>
             let totalCases = {{ total_cases|safe }};
             let statistics = {{ statistics|safe }};
-            let graphqlQuery = {{ graphql_query|safe }};
+            let mapBoxAccessToken = `{{ map_box_access_token }}`;
         </script>
         <script src="{% static 'js/mobile-nav-menu.js' %}"></script>
         <script src="{% static 'js/statistics.js' %}"></script>
