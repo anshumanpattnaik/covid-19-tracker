@@ -92,9 +92,3 @@ The website is still under development, if you've any new ideas or suggestions f
 
 ### License
 This project is licensed under the [Apache 2.0 License](LICENSE)
-
-Hello Everyone,
-
-Today I have launched a new website to track covid-19 cases around the world and on the website you can find the daily results of each country in
-every 24 hours. 
-
