@@ -4,8 +4,8 @@ migrations
 .idea
 __pycache__
 test
-logs
 TODO
 .dockerignore
+.env
 .env.prod
 .env.prod.db
