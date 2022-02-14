@@ -26,7 +26,7 @@ daily basis and the admin panel can be accessed using [/admin](http://127.0.0.1:
 
 ### Mapbox | Access Token
 
-To get started with the website I have provided one default Mapbox access token which can be found under the [.env](./.env) file, but the token has limited 
+To get started with the website I have provided one default Mapbox access token which can be found under the [.env](https://github.com/anshumanpattnaik/covid-19-tracker/blob/main/.env#L11) file, but the token has limited 
 usage, and I suggest bringing your access token and replacing the value with the following environmental variable.
 
 ``````````````````````````````````````````````````
