@@ -22,7 +22,7 @@ format to represent the geographic location of each country.
 ### Admin Panel
 
 To sync the daily statistics, I have built one Admin Panel which crawls & parses (JHU CSSE) CSV data and updates the results into the database on 
-daily basis and the admin panel can be accessed using [/admin](http://127.0.0.1:8000/admin/) endpoint.
+daily basis and the admin panel can be accessed using [/admin](http://127.0.0.1:8000/admin) endpoint.
 
 ### Mapbox | Access Token
 
