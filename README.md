@@ -44,10 +44,10 @@ the following dates to get started with the website.
 - [02-11-2022](data/02-11-2022.json)
 - [02-12-2022](data/02-12-2022.json)
 
-Before proceeding with the installation & setup process, make sure you've docker installed in your local machine. If not then please follow the 
-[official documentation](https://docs.docker.com/engine/install/) for installing docker in your local environment. 
+Before proceeding further with the installation & setup process, make sure you've docker installed in your local machine. If not then please follow the 
+[official documentation](https://docs.docker.com/engine/install/) for installation. 
 
-Once docker is set up in your local environment then proceed further for installation.
+Once docker is set up in your local environment then follow the following steps for project installation & setup process.
 
 ``````````````````````````````````````````````````````````````````
 git clone https://github.com/anshumanpattnaik/covid-19-tracker.git
