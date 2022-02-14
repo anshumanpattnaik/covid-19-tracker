@@ -8,7 +8,9 @@ dateSelector.addEventListener("change", function() {
     fetch(`/statistics/${dateSelector.value}`)
         .then(res => res.json())
         .then(res => {
-            renderStatistics(res.total_cases, res.country_statistics);
+            totalCases = res.total_cases;
+            statistics = res.country_statistics;
+            renderStatistics(totalCases, statistics);
             loadMap();
             loadingContainer.style.display = "none";
         }).catch(err => {
