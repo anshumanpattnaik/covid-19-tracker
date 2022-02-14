@@ -1,6 +1,7 @@
 import json
 import os
 
+import requests
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
@@ -13,7 +14,8 @@ from app.serializers import TotalCasesSerializer, CountrySerializer
 def index(request):
     total_cases = TotalCases.objects.all()
     date = total_cases.last().date
-    response = GetStatisticsByDate.get(request=request, date=date).data
+    response = requests.get(f"https://covid19tracker.info/statistics/{date}")
+    # response = GetStatisticsByDate.get(request=request, date=date).data
     dates = []
     for total in total_cases:
         dates.append(total.date)
