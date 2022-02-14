@@ -6,6 +6,4 @@ __pycache__
 test
 TODO
 .dockerignore
-.env
 .env.prod
-.env.prod.db
