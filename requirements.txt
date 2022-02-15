@@ -6,3 +6,7 @@ django-filter==21.1
 psycopg2-binary==2.9.3
 gunicorn==20.1.0
 beautifulsoup4==4.10.0
+graphene==2.1.9
+graphene-django==2.15.0
+graphql-core==2.3.2
+graphql-relay==2.0.1

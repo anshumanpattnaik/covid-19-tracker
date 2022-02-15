@@ -227,7 +227,7 @@ function flyToCoordinate(data) {
         const currentZoomOffset = map.getZoom();
         if (currentZoomOffset === ZOOM_LEVEL) {
             let coordinates = data.coordinates.slice();
-            let popup_view = renderPopupView(data.name, data.flag, data.statistics[0].confirmed, data.statistics[0].deaths);
+            let popup_view = renderPopupView(data.name, data.flag, data.statistics.edges[0].node.confirmed, data.statistics.edges[0].node.deaths);
             popup
                 .setLngLat(coordinates)
                 .setHTML(popup_view)
