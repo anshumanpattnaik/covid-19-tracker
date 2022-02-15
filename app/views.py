@@ -1,6 +1,7 @@
 import json
 import os
 
+import requests
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
@@ -29,23 +30,8 @@ def index(request):
         }
         return render(request, 'index.html', context)
     else:
-        with StatisticsClient() as statistics_client:
-            total_cases = TotalCases.objects.all()
-            date = total_cases.last().date
-            query = Utils.graphql_query(date=date)
-            payload = {"query": query}
-            response = statistics_client.get_covid_statistics(body=payload).obj()
-            dates = []
-            for total in total_cases:
-                dates.append(total.date)
-            context = {
-                "total_cases": response.data.totalCases.edges[0].node,
-                "statistics": response.data.countryStatistics,
-                "date": date,
-                "all_dates": dates,
-                "graphql_query": payload
-            }
-        return render(request, 'maintenance.html', context)
+        response = requests.get("https://api.covid19tracker.info/graphql#query=query%20%7B%0A%20%20totalCases(date%3A%20%2202-12-2022%22)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20totalConfirmed%0A%20%20%20%20%20%20%20%20totalDeaths%0A%20%20%20%20%20%20%20%20totalRecovered%0A%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20countryStatistics%20%7B%0A%20%20%20%20name%0A%20%20%20%20code%0A%20%20%20%20flag%0A%20%20%20%20coordinates%0A%20%20%20%20statistics(date%3A%20%2202-12-2022%22)%20%7B%0A%20%20%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20%20%20area%0A%20%20%20%20%20%20%20%20%20%20confirmed%0A%20%20%20%20%20%20%20%20%20%20deaths%0A%20%20%20%20%20%20%20%20%20%20recovered%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D")
+        return render(request, 'maintenance.html')
 
 
 class GetStatisticsByDate(APIView):
