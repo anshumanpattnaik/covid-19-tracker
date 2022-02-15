@@ -11,7 +11,7 @@
         <span class="copyrights">© 2022 COVID-19 Tracker. ALL RIGHTS RESERVED.</span>
     </div>
     <script>
-        let results = `{{ results }}`
+        let results = `{{ total_cases|safe }}`
         console.log(results);
     </script>
 {% endblock %}

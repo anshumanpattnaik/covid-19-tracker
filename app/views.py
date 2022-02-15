@@ -30,15 +30,22 @@ def index(request):
         }
         return render(request, 'index.html', context)
     else:
-        total_cases = TotalCases.objects.all()
-        date = total_cases.last().date
-        query = Utils.graphql_query(date=date)
-        payload = {"query": query}
-        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-        response = requests.post(url="https://api.covid19tracker.info/graphql", data=payload, headers=headers)
-        context = {
-            "results": response.json()
-        }
+        with StatisticsClient() as statistics_client:
+            total_cases = TotalCases.objects.all()
+            date = total_cases.last().date
+            query = Utils.graphql_query(date=date)
+            payload = {"query": query}
+            response = statistics_client.get_covid_statistics(body=payload).obj()
+            dates = []
+            for total in total_cases:
+                dates.append(total.date)
+            context = {
+                "total_cases": response.data.totalCases.edges[0].node,
+                "statistics": response.data.countryStatistics,
+                "date": date,
+                "all_dates": dates,
+                "graphql_query": payload
+            }
         return render(request, 'maintenance.html', context)
 
 

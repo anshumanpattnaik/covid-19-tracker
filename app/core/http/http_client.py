@@ -1,3 +1,4 @@
+import json
 import os
 
 import requests
@@ -7,7 +8,7 @@ from .response import Response
 
 class HTTPClient:
 
-    def __init__(self, url=f'https://api.covid19tracker.info/'):
+    def __init__(self, url=f'https://api.covid19tracker.info'):
         self.url = url
 
     def __enter__(self):
@@ -18,9 +19,7 @@ class HTTPClient:
 
     @staticmethod
     def send_request(method, url, payload=None, cls=None):
-        session = requests.Session()
-        if method == 'post':
-            response = session.request(method, url, json=payload)
-            print(response)
-            return Response(response, cls)
-        return Response(session.request(method, url), cls)
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        response = requests.post(url=url, data=json.dumps(payload), headers=headers)
+        print(response)
+        return Response(response, cls)
