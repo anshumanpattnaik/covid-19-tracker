@@ -13,7 +13,7 @@ https://covid19tracker.info
 
 ## Technical Overview
 
-TechStack behind covid19tracker website is (Django, Postgresql & Mapbox) and to collect daily results around the world admin panel crawls & 
+TechStack behind covid19tracker website is (Django, Postgresql, GraphQL & Mapbox) and to collect daily results around the world admin panel crawls & 
 parses (JHU CSSE) GitHub page using [beautifulsoup4](https://pypi.org/project/beautifulsoup4/) and parses the CSV file using 
 [PapaParse](https://www.papaparse.com/) javascript API and converts it to JSON data format and stores the results into the db using ORM data models. 
 To populate the statistics of each country around the world over the map it uses [Mapbox](https://www.mapbox.com/) Javascript API and follows geoJSON data 
@@ -85,6 +85,56 @@ Setup completed successfully!
 Open http://127.0.0.1:8000 on your browser
 
 ``````````````````````````````````````````````````````````````````
+
+### GraphQL
+
+To get the statistics faster, I have implemented GraphQL using [graphene](https://pypi.org/project/graphene/) python module, so we can query different datasets `i.e. Country, TotalCases & CovidStatistics` and get all the results at once in just few seconds.
+
+``````````````````````````````````````````````````
+Open http://127.0.0.1:8000/graphql on your browser 
+``````````````````````````````````````````````````
+
+### Query
+
+This is a sample query to get the covid statistics of the `02-14-2022` date and using this query, it will populate two different sets of data.
+
+1. Total Cases around the world - (totalCases)
+2. Statistics of all countries - (countryStatistics)
+
+````````````````````````````````````````````````````
+query {
+  totalCases(date: "02-14-2022") {
+    edges {
+      node {
+        totalConfirmed
+        totalDeaths
+        totalRecovered
+        date
+      }
+    }
+  }
+  countryStatistics {
+    name
+    code
+    flag
+    coordinates
+    statistics(date: "02-14-2022") {
+      edges {
+        node {
+          area
+          confirmed
+          deaths
+          recovered
+          date
+        }
+      }
+    }
+  }
+}
+````````````````````````````````````````````````````
+### Output
+
+<img src="screenshot/graphql.png" alt="GraphQL Result">
 
 ### Note
 The website is still under development, if you've any new ideas or suggestions feel free to reach out to me on 
