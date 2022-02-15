@@ -11,20 +11,23 @@ from app.serializers import TotalCasesSerializer, CountrySerializer
 
 
 def index(request):
-    total_cases = TotalCases.objects.all()
-    date = total_cases.last().date
-    response = GetStatisticsByDate.get(request=request, date=date).data
-    dates = []
-    for total in total_cases:
-        dates.append(total.date)
-    context = {
-        "total_cases": response["total_cases"],
-        "statistics": response["country_statistics"],
-        "date": date,
-        "all_dates": dates,
-        "map_box_access_token": os.getenv('MAP_BOX_ACCESS_TOKEN')
-    }
-    return render(request, 'index.html', context)
+    if bool(int(os.getenv('MAINTENANCE_ENABLED'))) is False:
+        total_cases = TotalCases.objects.all()
+        date = total_cases.last().date
+        response = GetStatisticsByDate.get(request=request, date=date).data
+        dates = []
+        for total in total_cases:
+            dates.append(total.date)
+        context = {
+            "total_cases": response["total_cases"],
+            "statistics": response["country_statistics"],
+            "date": date,
+            "all_dates": dates,
+            "map_box_access_token": os.getenv('MAP_BOX_ACCESS_TOKEN')
+        }
+        return render(request, 'index.html', context)
+    else:
+        return render(request, 'maintenance.html')
 
 
 class GetStatisticsByDate(APIView):

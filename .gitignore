@@ -2,6 +2,7 @@ venv
 migrations
 .gitignore
 .idea
+.idea/covid19.iml
 __pycache__
 test
 TODO
