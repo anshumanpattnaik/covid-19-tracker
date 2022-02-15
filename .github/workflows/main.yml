@@ -22,6 +22,7 @@ jobs:
           echo ADMIN_PANEL_ENABLED=${{ secrets.ADMIN_PANEL_ENABLED }} >> .env.prod
           echo MAP_BOX_ACCESS_TOKEN=${{ secrets.MAP_BOX_ACCESS_TOKEN }} >> .env.prod
           echo MAINTENANCE_ENABLED=${{ secrets.MAINTENANCE_ENABLED }} >> .env.prod
+          echo API_ENDPOINT=${{ secrets.API_ENDPOINT }} >> .env.prod
       - name: ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock

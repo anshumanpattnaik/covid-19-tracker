@@ -3,12 +3,10 @@ import os
 
 import requests
 
-from .response import Response
-
 
 class HTTPClient:
 
-    def __init__(self, url=f'https://api.covid19tracker.info'):
+    def __init__(self, url=os.getenv('API_ENDPOINT')):
         self.url = url
 
     def __enter__(self):
@@ -18,8 +16,7 @@ class HTTPClient:
         pass
 
     @staticmethod
-    def send_request(method, url, payload=None, cls=None):
+    def send_request(url, payload=None):
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         response = requests.post(url=url, data=json.dumps(payload), headers=headers)
-        print(response)
-        return Response(response, cls)
+        return response
