@@ -21,14 +21,8 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY ./entrypoint.sh .
-RUN sed -i 's/\r$//g'  $APP_HOME/entrypoint.sh
-RUN chmod +x  $APP_HOME/entrypoint.sh
-
 COPY . $APP_HOME
 
 RUN chown -R covid19:covid19 $APP_HOME
 
 USER covid19
-
-ENTRYPOINT ["/home/covid19/web/entrypoint.sh"]

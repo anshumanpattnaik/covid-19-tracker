@@ -56,11 +56,13 @@ cd covid-19-tracker
 docker-compose up -d --build 
 ``````````````````````````````````````````````````````````````````
 
-Once your container is up and running then execute the below command to set up all country & statistics data into the database. 
+Once your container is up and running then execute the below commands to set up all country & statistics data into the database. 
 And this setup procedure is essential otherwise you'll face some unintended behaviour while accessing the website.
 
 
 ``````````````````````````````````````````````````````````````````
+docker-compose exec web python manage.py makemigrations app
+docker-compose exec web python manage.py migrate app
 docker-compose exec web python setup.py --noinput
 ``````````````````````````````````````````````````````````````````
 
