@@ -7,7 +7,7 @@ from .response import Response
 
 class HTTPClient:
 
-    def __init__(self, url=f'http://{os.environ.get("DJANGO_ALLOWED_HOSTS")}:8002'):
+    def __init__(self, url=f'https://api.covid19tracker.info/'):
         self.url = url
 
     def __enter__(self):
