@@ -98,14 +98,14 @@ Open http://127.0.0.1:8000/graphql on your browser
 
 ### Query
 
-This is a sample query to get the covid statistics of the `02-14-2022` date and using this query, it will populate two different sets of data.
+This is a sample query to get the covid statistics of the `02-10-2022` date and using this query, it will populate two different sets of data.
 
 1. Total Cases around the world - (totalCases)
 2. Statistics of all countries - (countryStatistics)
 
 ````````````````````````````````````````````````````
 query {
-  totalCases(date: "02-14-2022") {
+  totalCases(date: "02-10-2022") {
     edges {
       node {
         totalConfirmed
@@ -120,7 +120,7 @@ query {
     code
     flag
     coordinates
-    statistics(date: "02-14-2022") {
+    statistics(date: "02-10-2022") {
       edges {
         node {
           area
