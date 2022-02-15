@@ -30,8 +30,16 @@ def index(request):
         }
         return render(request, 'index.html', context)
     else:
-        response = requests.get("https://api.covid19tracker.info/graphql#query=query%20%7B%0A%20%20totalCases(date%3A%20%2202-12-2022%22)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20totalConfirmed%0A%20%20%20%20%20%20%20%20totalDeaths%0A%20%20%20%20%20%20%20%20totalRecovered%0A%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20countryStatistics%20%7B%0A%20%20%20%20name%0A%20%20%20%20code%0A%20%20%20%20flag%0A%20%20%20%20coordinates%0A%20%20%20%20statistics(date%3A%20%2202-12-2022%22)%20%7B%0A%20%20%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20%20%20area%0A%20%20%20%20%20%20%20%20%20%20confirmed%0A%20%20%20%20%20%20%20%20%20%20deaths%0A%20%20%20%20%20%20%20%20%20%20recovered%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D")
-        return render(request, 'maintenance.html')
+        total_cases = TotalCases.objects.all()
+        date = total_cases.last().date
+        query = Utils.graphql_query(date=date)
+        payload = {"query": query}
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        response = requests.post(url="https://api.covid19tracker.info/graphql", data=payload, headers=headers)
+        context = {
+            "results": response.json()
+        }
+        return render(request, 'maintenance.html', context)
 
 
 class GetStatisticsByDate(APIView):
