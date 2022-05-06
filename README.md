@@ -5,12 +5,6 @@ the data from [Johns Hopkins University Center for Systems Science and Engineeri
 
 <img src="screenshot/Thumbnail.png" alt="COVID-19 Tracker">
 
-### Production URL
-
-<a href="https://covid19tracker.info/" target="_blank">
-https://covid19tracker.info
-</a>
-
 ## Technical Overview
 
 TechStack behind covid19tracker website is (Django, Postgresql, GraphQL & Mapbox) and to collect daily results around the world admin panel crawls & 
